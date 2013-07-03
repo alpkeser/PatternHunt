@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C7A2AEE177A47F500099873 /* MenuScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A2AED177A47F500099873 /* MenuScene.m */; };
+		3C7A2AF1177A499B00099873 /* GameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A2AF0177A499B00099873 /* GameScene.m */; };
+		3C7A2AF6177A4D5200099873 /* SpriteKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C7A2AF5177A4D5200099873 /* SpriteKit.framework */; };
+		3C7A2AFA177A4EA700099873 /* PHTile.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A2AF9177A4EA700099873 /* PHTile.m */; };
+		3C7A2AFD177A4FFD00099873 /* PHCorridor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A2AFC177A4FFD00099873 /* PHCorridor.m */; };
+		3C7A2B00177A508500099873 /* PHTileFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A2AFF177A508500099873 /* PHTileFactory.m */; };
+		3C7A2B04177A582100099873 /* PHProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7A2B03177A582100099873 /* PHProperties.m */; };
 		3CD9F6581778A52700BB009E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD9F6571778A52700BB009E /* UIKit.framework */; };
 		3CD9F65A1778A52700BB009E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD9F6591778A52700BB009E /* Foundation.framework */; };
 		3CD9F65C1778A52700BB009E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CD9F65B1778A52700BB009E /* CoreGraphics.framework */; };
@@ -21,6 +28,19 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3C7A2AEC177A47F500099873 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
+		3C7A2AED177A47F500099873 /* MenuScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuScene.m; sourceTree = "<group>"; };
+		3C7A2AEF177A499B00099873 /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameScene.h; sourceTree = "<group>"; };
+		3C7A2AF0177A499B00099873 /* GameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameScene.m; sourceTree = "<group>"; };
+		3C7A2AF5177A4D5200099873 /* SpriteKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpriteKit.framework; path = System/Library/Frameworks/SpriteKit.framework; sourceTree = SDKROOT; };
+		3C7A2AF8177A4EA700099873 /* PHTile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTile.h; sourceTree = "<group>"; };
+		3C7A2AF9177A4EA700099873 /* PHTile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTile.m; sourceTree = "<group>"; };
+		3C7A2AFB177A4FFD00099873 /* PHCorridor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHCorridor.h; sourceTree = "<group>"; };
+		3C7A2AFC177A4FFD00099873 /* PHCorridor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHCorridor.m; sourceTree = "<group>"; };
+		3C7A2AFE177A508500099873 /* PHTileFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHTileFactory.h; sourceTree = "<group>"; };
+		3C7A2AFF177A508500099873 /* PHTileFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHTileFactory.m; sourceTree = "<group>"; };
+		3C7A2B02177A582100099873 /* PHProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHProperties.h; sourceTree = "<group>"; };
+		3C7A2B03177A582100099873 /* PHProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHProperties.m; sourceTree = "<group>"; };
 		3CD9F6541778A52700BB009E /* PatternHunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PatternHunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CD9F6571778A52700BB009E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3CD9F6591778A52700BB009E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -44,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C7A2AF6177A4D5200099873 /* SpriteKit.framework in Frameworks */,
 				3CD9F6581778A52700BB009E /* UIKit.framework in Frameworks */,
 				3CD9F65A1778A52700BB009E /* Foundation.framework in Frameworks */,
 				3CD9F65C1778A52700BB009E /* CoreGraphics.framework in Frameworks */,
@@ -53,6 +74,39 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3C7A2AF2177A4A7400099873 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				3C7A2AEC177A47F500099873 /* MenuScene.h */,
+				3C7A2AED177A47F500099873 /* MenuScene.m */,
+				3C7A2AEF177A499B00099873 /* GameScene.h */,
+				3C7A2AF0177A499B00099873 /* GameScene.m */,
+			);
+			name = Scenes;
+			sourceTree = "<group>";
+		};
+		3C7A2AF7177A4D8100099873 /* Objects */ = {
+			isa = PBXGroup;
+			children = (
+				3C7A2AF8177A4EA700099873 /* PHTile.h */,
+				3C7A2AF9177A4EA700099873 /* PHTile.m */,
+				3C7A2AFB177A4FFD00099873 /* PHCorridor.h */,
+				3C7A2AFC177A4FFD00099873 /* PHCorridor.m */,
+				3C7A2AFE177A508500099873 /* PHTileFactory.h */,
+				3C7A2AFF177A508500099873 /* PHTileFactory.m */,
+			);
+			name = Objects;
+			sourceTree = "<group>";
+		};
+		3C7A2B01177A520E00099873 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				3C7A2B02177A582100099873 /* PHProperties.h */,
+				3C7A2B03177A582100099873 /* PHProperties.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		3CD9F64B1778A52700BB009E = {
 			isa = PBXGroup;
 			children = (
@@ -73,6 +127,7 @@
 		3CD9F6561778A52700BB009E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3C7A2AF5177A4D5200099873 /* SpriteKit.framework */,
 				3CD9F6571778A52700BB009E /* UIKit.framework */,
 				3CD9F6591778A52700BB009E /* Foundation.framework */,
 				3CD9F65B1778A52700BB009E /* CoreGraphics.framework */,
@@ -83,6 +138,9 @@
 		3CD9F65D1778A52700BB009E /* PatternHunt */ = {
 			isa = PBXGroup;
 			children = (
+				3C7A2B01177A520E00099873 /* Util */,
+				3C7A2AF7177A4D8100099873 /* Objects */,
+				3C7A2AF2177A4A7400099873 /* Scenes */,
 				3CD9F6661778A52700BB009E /* AppDelegate.h */,
 				3CD9F6671778A52700BB009E /* AppDelegate.m */,
 				3CD9F66F1778A52700BB009E /* MainStoryboard.storyboard */,
@@ -173,9 +231,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3C7A2B00177A508500099873 /* PHTileFactory.m in Sources */,
 				3CD9F6641778A52700BB009E /* main.m in Sources */,
+				3C7A2AEE177A47F500099873 /* MenuScene.m in Sources */,
+				3C7A2B04177A582100099873 /* PHProperties.m in Sources */,
+				3C7A2AF1177A499B00099873 /* GameScene.m in Sources */,
+				3C7A2AFA177A4EA700099873 /* PHTile.m in Sources */,
 				3CD9F6681778A52700BB009E /* AppDelegate.m in Sources */,
 				3CD9F6741778A52700BB009E /* ViewController.m in Sources */,
+				3C7A2AFD177A4FFD00099873 /* PHCorridor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,6 +327,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -274,6 +340,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -298,6 +366,7 @@
 				3CD9F6791778A52700BB009E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

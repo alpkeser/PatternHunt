@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[PHTileFactory shouldSendNewTile]:PHTileFactory.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "(PHTile*)myTiles[0]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
