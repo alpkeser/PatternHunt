@@ -13,11 +13,11 @@
 
 - (id)initWithOrder:(int)anOrder withFrame:(CGRect)aFrame andScene:(SKScene*)aScene andRunning:(BOOL)isRunning{
     self = [super init];
-    myTileFactory = [[PHTileFactory alloc] initWithOrder:order inFrame:aFrame];
+//    myTileFactory = [[PHTileFactory alloc] initWithOrder:order inFrame:aFrame];
     if (isRunning) {
-        [myTileFactory allahinaFirlat:aScene];
+//        [myTileFactory allahinaFirlat:aScene];
     }else{
-        [myTileFactory birSeriFirlat:aScene];
+//        [myTileFactory birSeriFirlat:aScene];
     }
     
     return  self;

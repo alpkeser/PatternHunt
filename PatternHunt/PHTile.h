@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
+@class PHTileFactory;
 @interface PHTile : SKSpriteNode
 
 
+@property (nonatomic,retain) PHTileFactory *myFactory;
 @property (nonatomic,assign) BOOL isSelected;
-
+@property (nonatomic,assign) SKColor *orginalColor;
+- (void)divideToFourPiece;
 @end

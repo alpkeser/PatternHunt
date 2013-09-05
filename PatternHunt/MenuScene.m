@@ -18,7 +18,10 @@
     }
 }
 - (void)createSceneContents{
-    [self setBackgroundColor:[SKColor blueColor]];
+    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"bg.png"];
+    [bgNode setSize:self.size];
+    [bgNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
+    [self addChild:bgNode];
     [self setScaleMode:SKSceneScaleModeAspectFit];
     [self addChild:[self newHelloNode]];
 }

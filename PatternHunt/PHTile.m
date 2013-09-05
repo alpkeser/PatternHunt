@@ -9,9 +9,17 @@
 #import "PHTile.h"
 
 @implementation PHTile
-@synthesize isSelected;
+@synthesize isSelected,myFactory;
 
-
+- (void)divideToFourPiece{
+    float centerX = arc4random() % (int)self.size.width;
+    float centerY = arc4random() % (int)self.size.height;
+    float ustBaslangic = arc4random() % (int)self.size.width;
+    float altBaslangic = arc4random() % (int)self.size.width;
+    float solBaslangic = arc4random() % (int)self.size.height;
+    float sagBaslangic = arc4random() % (int)self.size.height;
+    
+}
 
 
 

@@ -22,7 +22,7 @@ const int corridorNumber = 10;
 }
 
 + (float)getTileSizeInFrame:(CGRect)aFrame{
-    return aFrame.size.width /corridorNumber * 0.8;
+    return aFrame.size.width /corridorNumber * 0.9;
     
 }
 + (float)getTileFactoryYInFrame:(CGRect)aFrame{
@@ -37,7 +37,7 @@ const int corridorNumber = 10;
             return [UIColor redColor];
             break;
         case 1:
-            return [UIColor blueColor];
+            return [UIColor yellowColor];
             break;
         case 2:
             return [UIColor greenColor];

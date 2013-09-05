@@ -25,6 +25,15 @@
 		3CD9F66E1778A52700BB009E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CD9F66D1778A52700BB009E /* Default-568h@2x.png */; };
 		3CD9F6711778A52700BB009E /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3CD9F66F1778A52700BB009E /* MainStoryboard.storyboard */; };
 		3CD9F6741778A52700BB009E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD9F6731778A52700BB009E /* ViewController.m */; };
+		B505A9B4179FBAD0007ADADA /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B505A9B3179FBAD0007ADADA /* bg.png */; };
+		B51DE9EF17CB0D840079468C /* SummaryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B51DE9EE17CB0D840079468C /* SummaryScene.m */; };
+		B552F65217C35C8A0031AF34 /* normal_turuncu.png in Resources */ = {isa = PBXBuildFile; fileRef = B552F65117C35C8A0031AF34 /* normal_turuncu.png */; };
+		B5A72007179DDEDA00F88EFB /* LevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A72006179DDEDA00F88EFB /* LevelManager.m */; };
+		B5C9486D17A65D15008EBCC6 /* ScoreBoardScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */; };
+		B5CC117117972952006BB1F6 /* bos_kadran.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CC116F17972952006BB1F6 /* bos_kadran.png */; };
+		B5CC117217972952006BB1F6 /* meter_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CC117017972952006BB1F6 /* meter_Icon.png */; };
+		B5DC4E47179653AB00DE61F5 /* ScoreboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DC4E46179653AB00DE61F5 /* ScoreboardView.m */; };
+		B5ED8B551783F159000BDE77 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5ED8B541783F159000BDE77 /* StoreKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +66,19 @@
 		3CD9F6701778A52700BB009E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		3CD9F6721778A52700BB009E /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		3CD9F6731778A52700BB009E /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B505A9B3179FBAD0007ADADA /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		B51DE9ED17CB0D840079468C /* SummaryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryScene.h; sourceTree = "<group>"; };
+		B51DE9EE17CB0D840079468C /* SummaryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryScene.m; sourceTree = "<group>"; };
+		B552F65117C35C8A0031AF34 /* normal_turuncu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal_turuncu.png; sourceTree = "<group>"; };
+		B5A72005179DDEDA00F88EFB /* LevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelManager.h; sourceTree = "<group>"; };
+		B5A72006179DDEDA00F88EFB /* LevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelManager.m; sourceTree = "<group>"; };
+		B5C9486B17A65D15008EBCC6 /* ScoreBoardScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreBoardScene.h; sourceTree = "<group>"; };
+		B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreBoardScene.m; sourceTree = "<group>"; };
+		B5CC116F17972952006BB1F6 /* bos_kadran.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bos_kadran.png; sourceTree = "<group>"; };
+		B5CC117017972952006BB1F6 /* meter_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meter_Icon.png; sourceTree = "<group>"; };
+		B5DC4E45179653AB00DE61F5 /* ScoreboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreboardView.h; sourceTree = "<group>"; };
+		B5DC4E46179653AB00DE61F5 /* ScoreboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreboardView.m; sourceTree = "<group>"; };
+		B5ED8B541783F159000BDE77 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5ED8B551783F159000BDE77 /* StoreKit.framework in Frameworks */,
 				3C7A2AF6177A4D5200099873 /* SpriteKit.framework in Frameworks */,
 				3CD9F6581778A52700BB009E /* UIKit.framework in Frameworks */,
 				3CD9F65A1778A52700BB009E /* Foundation.framework in Frameworks */,
@@ -81,6 +104,12 @@
 				3C7A2AED177A47F500099873 /* MenuScene.m */,
 				3C7A2AEF177A499B00099873 /* GameScene.h */,
 				3C7A2AF0177A499B00099873 /* GameScene.m */,
+				B5DC4E45179653AB00DE61F5 /* ScoreboardView.h */,
+				B5DC4E46179653AB00DE61F5 /* ScoreboardView.m */,
+				B5C9486B17A65D15008EBCC6 /* ScoreBoardScene.h */,
+				B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */,
+				B51DE9ED17CB0D840079468C /* SummaryScene.h */,
+				B51DE9EE17CB0D840079468C /* SummaryScene.m */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -103,6 +132,8 @@
 			children = (
 				3C7A2B02177A582100099873 /* PHProperties.h */,
 				3C7A2B03177A582100099873 /* PHProperties.m */,
+				B5A72005179DDEDA00F88EFB /* LevelManager.h */,
+				B5A72006179DDEDA00F88EFB /* LevelManager.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -127,6 +158,7 @@
 		3CD9F6561778A52700BB009E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5ED8B541783F159000BDE77 /* StoreKit.framework */,
 				3C7A2AF5177A4D5200099873 /* SpriteKit.framework */,
 				3CD9F6571778A52700BB009E /* UIKit.framework */,
 				3CD9F6591778A52700BB009E /* Foundation.framework */,
@@ -138,6 +170,8 @@
 		3CD9F65D1778A52700BB009E /* PatternHunt */ = {
 			isa = PBXGroup;
 			children = (
+				B5CC116E17972945006BB1F6 /* resources */,
+				B5ABB4A5179639740020E72F /* iPad */,
 				3C7A2B01177A520E00099873 /* Util */,
 				3C7A2AF7177A4D8100099873 /* Objects */,
 				3C7A2AF2177A4A7400099873 /* Scenes */,
@@ -163,6 +197,40 @@
 				3CD9F66D1778A52700BB009E /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B552F64F17C35C740031AF34 /* tiles */ = {
+			isa = PBXGroup;
+			children = (
+				B552F65017C35C7C0031AF34 /* orange_tile */,
+			);
+			name = tiles;
+			sourceTree = "<group>";
+		};
+		B552F65017C35C7C0031AF34 /* orange_tile */ = {
+			isa = PBXGroup;
+			children = (
+				B552F65117C35C8A0031AF34 /* normal_turuncu.png */,
+			);
+			name = orange_tile;
+			sourceTree = "<group>";
+		};
+		B5ABB4A5179639740020E72F /* iPad */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = iPad;
+			sourceTree = "<group>";
+		};
+		B5CC116E17972945006BB1F6 /* resources */ = {
+			isa = PBXGroup;
+			children = (
+				B552F64F17C35C740031AF34 /* tiles */,
+				B505A9B3179FBAD0007ADADA /* bg.png */,
+				B5CC116F17972952006BB1F6 /* bos_kadran.png */,
+				B5CC117017972952006BB1F6 /* meter_Icon.png */,
+			);
+			name = resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +261,16 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "alp keser";
+				TargetAttributes = {
+					3CD9F6531778A52700BB009E = {
+						DevelopmentTeam = WCG9HNJRTD;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = 3CD9F64F1778A52700BB009E /* Build configuration list for PBXProject "PatternHunt" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -217,7 +295,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CD9F6621778A52700BB009E /* InfoPlist.strings in Resources */,
+				B5CC117117972952006BB1F6 /* bos_kadran.png in Resources */,
+				B505A9B4179FBAD0007ADADA /* bg.png in Resources */,
+				B5CC117217972952006BB1F6 /* meter_Icon.png in Resources */,
 				3CD9F66A1778A52700BB009E /* Default.png in Resources */,
+				B552F65217C35C8A0031AF34 /* normal_turuncu.png in Resources */,
 				3CD9F66C1778A52700BB009E /* Default@2x.png in Resources */,
 				3CD9F66E1778A52700BB009E /* Default-568h@2x.png in Resources */,
 				3CD9F6711778A52700BB009E /* MainStoryboard.storyboard in Resources */,
@@ -233,8 +315,12 @@
 			files = (
 				3C7A2B00177A508500099873 /* PHTileFactory.m in Sources */,
 				3CD9F6641778A52700BB009E /* main.m in Sources */,
+				B5C9486D17A65D15008EBCC6 /* ScoreBoardScene.m in Sources */,
+				B5A72007179DDEDA00F88EFB /* LevelManager.m in Sources */,
 				3C7A2AEE177A47F500099873 /* MenuScene.m in Sources */,
 				3C7A2B04177A582100099873 /* PHProperties.m in Sources */,
+				B5DC4E47179653AB00DE61F5 /* ScoreboardView.m in Sources */,
+				B51DE9EF17CB0D840079468C /* SummaryScene.m in Sources */,
 				3C7A2AF1177A499B00099873 /* GameScene.m in Sources */,
 				3C7A2AFA177A4EA700099873 /* PHTile.m in Sources */,
 				3CD9F6681778A52700BB009E /* AppDelegate.m in Sources */,
@@ -277,7 +363,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -290,8 +377,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
+				PROVISIONING_PROFILE = "DF9B7C06-8FEE-48FE-B396-6119344F4E76";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -308,14 +396,16 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PROVISIONING_PROFILE = "DF9B7C06-8FEE-48FE-B396-6119344F4E76";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -324,12 +414,14 @@
 		3CD9F6781778A52700BB009E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -337,12 +429,14 @@
 		3CD9F6791778A52700BB009E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
