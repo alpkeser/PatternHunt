@@ -31,7 +31,6 @@ BOOL gameOver = NO;
                 //iki oldu level
                 speed = 2.8;
                 level = 2;
-                [aScene endGame];
                 return YES;
             }
             break;

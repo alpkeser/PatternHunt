@@ -21,6 +21,7 @@
         //code to be executed on the main queue after delay
         [self increasePressure];
     });
+    
 
     beginTime= [ NSDate date];
     SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"bg.png"];
@@ -75,7 +76,7 @@
         [self endGame];
     }
     if ([LevelManager checkLevel:self]) {
-//        
+        [self showLevelUp];
     }
 //    int score = [scoreboardScene.scoreLabel.text intValue];
 //    score++;
@@ -340,5 +341,26 @@
     });
 }
 
+- (void)showLevelUp{
+    SKLabelNode *helloNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    [helloNode setText:[NSString stringWithFormat:@"Level %i",[LevelManager getLevel]] ];
+    [helloNode setFontSize:22];
+    [helloNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
+    [self addChild:helloNode];
+    
+    SKAction *moveup = [SKAction moveByX:0 y:50 duration:0.5];
+    SKAction *zoom = [SKAction scaleTo:2.0 duration:0.25];
+    SKAction *pause = [SKAction waitForDuration:0.5];
+    //    SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
+    //    SKAction *remove = [SKAction removeFromParent];
+    //    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause,fadeAway,remove]];
+    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause]];
+    [helloNode runAction:seq completion:^{
+        SummaryScene *gameScene = [[SummaryScene alloc] initWithSize:self.size];
+        SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
+        [self.view presentScene:gameScene transition:doors];
+    }];
+
+}
 
 @end

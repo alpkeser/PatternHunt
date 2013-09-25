@@ -17,6 +17,6 @@
 + (void)initLevels;
 + (int)getSpeed;
 + (void)setSpeed;
-
++ (int)getLevel;
 
 @end

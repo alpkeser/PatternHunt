@@ -29,6 +29,7 @@
 		B51DE9EF17CB0D840079468C /* SummaryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B51DE9EE17CB0D840079468C /* SummaryScene.m */; };
 		B552F65217C35C8A0031AF34 /* normal_turuncu.png in Resources */ = {isa = PBXBuildFile; fileRef = B552F65117C35C8A0031AF34 /* normal_turuncu.png */; };
 		B5A72007179DDEDA00F88EFB /* LevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A72006179DDEDA00F88EFB /* LevelManager.m */; };
+		B5C0FE7F17DCF9C700D2697E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5C0FE7E17DCF9C700D2697E /* GameKit.framework */; };
 		B5C9486D17A65D15008EBCC6 /* ScoreBoardScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */; };
 		B5CC117117972952006BB1F6 /* bos_kadran.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CC116F17972952006BB1F6 /* bos_kadran.png */; };
 		B5CC117217972952006BB1F6 /* meter_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CC117017972952006BB1F6 /* meter_Icon.png */; };
@@ -72,6 +73,7 @@
 		B552F65117C35C8A0031AF34 /* normal_turuncu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal_turuncu.png; sourceTree = "<group>"; };
 		B5A72005179DDEDA00F88EFB /* LevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelManager.h; sourceTree = "<group>"; };
 		B5A72006179DDEDA00F88EFB /* LevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelManager.m; sourceTree = "<group>"; };
+		B5C0FE7E17DCF9C700D2697E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		B5C9486B17A65D15008EBCC6 /* ScoreBoardScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreBoardScene.h; sourceTree = "<group>"; };
 		B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreBoardScene.m; sourceTree = "<group>"; };
 		B5CC116F17972952006BB1F6 /* bos_kadran.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bos_kadran.png; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5C0FE7F17DCF9C700D2697E /* GameKit.framework in Frameworks */,
 				B5ED8B551783F159000BDE77 /* StoreKit.framework in Frameworks */,
 				3C7A2AF6177A4D5200099873 /* SpriteKit.framework in Frameworks */,
 				3CD9F6581778A52700BB009E /* UIKit.framework in Frameworks */,
@@ -158,6 +161,7 @@
 		3CD9F6561778A52700BB009E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B5C0FE7E17DCF9C700D2697E /* GameKit.framework */,
 				B5ED8B541783F159000BDE77 /* StoreKit.framework */,
 				3C7A2AF5177A4D5200099873 /* SpriteKit.framework */,
 				3CD9F6571778A52700BB009E /* UIKit.framework */,

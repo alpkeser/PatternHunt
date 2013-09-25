@@ -8,7 +8,9 @@
 
 #import <SpriteKit/SpriteKit.h>
 
-@interface SummaryScene : SKScene
+@interface SummaryScene : SKScene{
+    UIView *scoreView;
+}
 
 @property (nonatomic, assign)float point;
 @end
