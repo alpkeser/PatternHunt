@@ -37,15 +37,47 @@ const int corridorNumber = 10;
             return [UIColor redColor];
             break;
         case 1:
-            return [UIColor yellowColor];
+            return [UIColor blueColor];
             break;
         case 2:
             return [UIColor greenColor];
             break;
+        case 3:
+            return [UIColor purpleColor];
             
         default:
             break;
     }
     return [UIColor whiteColor];
+}
+
++ (NSString*)getImageNameWithNumber:(int)aColorNumber{
+    switch (aColorNumber) {
+        case 0:
+            //kırmızı
+            return @"redTile.png";
+            break;
+        case 1:
+            //maviiii
+            return @"blueTile.png";
+            break;
+        case 2:
+            
+            //yesillll
+            return @"greenTile.png";
+            break;
+        case 3:
+//            morrrr
+            return @"purpleTile.png";
+        case 4:
+            //siyah
+            return @"blackTile.png";
+        default:
+            break;
+    }
+    
+    //sicti cafer bez getir
+    //siyahh
+     return @"blackTile.png";
 }
 @end

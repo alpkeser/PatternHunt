@@ -9,13 +9,13 @@
 #import "PHTileFactory.h"
 
 @implementation PHTileFactory
-@synthesize aX,aY,distance,factoryLevel,tileSize,myTiles,isRunning,order;
+@synthesize aX,aY,distance,factoryLevel,tileSize,myTiles,isRunning,order,tilePattern;
 - (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running{
     self = [super init];
     aX = [PHProperties getTileFactoryXByOrder:anOrder inFrame:aFrame];
     aY = [PHProperties getTileFactoryYInFrame:aFrame];
     distance = [PHProperties getDistanceInFrame:aFrame];
-    factoryLevel = 3;
+    factoryLevel = 3;//burda renk sayisi su an icin belli oluyor
     tileSize = [PHProperties getTileSizeInFrame:aFrame];
     myTiles = [[NSMutableArray alloc] init];
     [self logVariables];
@@ -26,16 +26,14 @@
 }
 -(PHTile*)generateRandomTile{
     int randomColorCode = arc4random() % factoryLevel;
-    PHTile *returnTile =[[PHTile alloc] initWithColor:[PHProperties getColorWithNumber:randomColorCode] size:CGSizeMake(tileSize,tileSize)];
+    PHTile *returnTile = [[PHTile alloc] initWithImageNamed:[PHProperties getImageNameWithNumber:randomColorCode]];
+    [returnTile setSize:CGSizeMake(tileSize, tileSize)];
+//    [returnTile setScale:0.40];
     [returnTile setIsSelected:NO];
-    [returnTile setOrginalColor:[PHProperties getColorWithNumber:randomColorCode] ];
-    //for temp
-    if (randomColorCode == 0) {
-        returnTile = [[PHTile alloc] initWithImageNamed:@"normal_turuncu.png"];
-        [returnTile setSize:CGSizeMake(tileSize, tileSize)];
-    }
+    [returnTile setOrginalColorCode:randomColorCode ];
+//    [returnTile runAction:[SKAction rotateByAngle:45.0f duration:0]]
     [returnTile setMyFactory:self];
-    [returnTile setAlpha:0.6f];
+    [returnTile setAlpha:1.0f];
     return returnTile;
 }
 - (void)allahinaFirlat:(SKScene*)aScene{
@@ -113,5 +111,14 @@
         [self moveSpriteEndOfCorridor:tempTile];
     }
     isRunning = YES;
+}
+
+//onceden renk kodlarını tutan array init
+- (void)initTilePattern{
+    tilePattern  = [[NSMutableArray alloc] init];
+    //300 yeterm?
+    for (int sayac = 0; sayac<300; sayac++) {
+        [tilePattern addObject:[NSNumber numberWithInt:(arc4random() % factoryLevel)]];
+    }
 }
 @end

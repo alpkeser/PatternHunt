@@ -18,6 +18,7 @@
 @property (nonatomic,assign) int order;
 @property (nonatomic,assign) BOOL isRunning;
 @property (nonatomic,retain) NSMutableArray *myTiles;
+@property (nonatomic,retain) NSMutableArray *tilePattern; //multi icin geldi..onceden belirlenmis pattern
 - (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running;
 - (PHTile*)generateRandomTile;
 - (void)sendNewTile:(SKScene*)aScene;

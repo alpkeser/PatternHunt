@@ -7,7 +7,28 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+#import <AVFoundation/AVFoundation.h>
+#import "GCHelper.h"
+#import "NetworkHelper.h"
+typedef enum{
+    SINGLE_PLAYER,
+    MULTIPLAYER
+}PlayerMode;
 
-@interface MenuScene : SKScene
+typedef enum{
+    DEATHMATCH,
+    LONGEST
+}GameMode;
+
+
+
+
+@interface MenuScene : SKScene<GCHelperDelegate>{
+    PlayerMode playerMode;
+    GameMode gameMode;
+    MultiplayerType multiplayerType;
+
+}
 @property BOOL contentCreated;
+@property (nonatomic,retain)    UIViewController *parentVC;
 @end

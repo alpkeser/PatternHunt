@@ -8,16 +8,18 @@
 
 #import <SpriteKit/SpriteKit.h>
 #import "ScoreboardView.h"
-#import "ScoreBoardScene.h"
+#import "ScoreBoardNode.h"
 @interface GameScene : SKScene{
     NSMutableArray *factories;
     NSMutableArray *selectedTiles;
     NSMutableArray *touchesStack;
     BOOL isSceneStopped;
     BOOL doesGameStarted;
-    ScoreBoardScene *scoreboardScene;
+    ScoreBoardNode *scoreboardNode;
     NSDate *beginTime;
     int randomTouchId;
+    float secondsLeft;
+    NSTimer *timer;
 
 }
 @property BOOL contentCreated;

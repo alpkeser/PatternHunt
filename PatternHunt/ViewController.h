@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface ViewController : UIViewController
+#import "GCHelper.h"
+@interface ViewController : UIViewController<GCHelperDelegate>
 
 @end

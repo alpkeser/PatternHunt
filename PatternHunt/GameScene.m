@@ -23,11 +23,13 @@
     });
     
 
-    beginTime= [ NSDate date];
-    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"bg.png"];
-    [bgNode setSize:self.size];
-    [bgNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
-    [self addChild:bgNode];
+    secondsLeft = 60.0f;
+    [self setBackgroundColor:[UIColor colorWithRed:247.0f/255.0f green:175.0f/255.0f blue:29.0f/2555.0f alpha:1]];
+//    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"bg.png"];
+//    SKShapeNode *shapeBgNode = [[SKShapeNode ]
+//    [bgNode setSize:self.size];
+//    [bgNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
+//    [self addChild:bgNode];   
     isSceneStopped = NO;
     doesGameStarted = NO;
     factories = [[NSMutableArray alloc] init];
@@ -68,16 +70,31 @@
         //code to be executed on the main queue after delay
         [self startGame];
     });
+    
+    //updating counter
+    NSRunLoop *runloop = [NSRunLoop currentRunLoop];
+    timer = [NSTimer timerWithTimeInterval:0.1 target:self selector:@selector(updateCounter) userInfo:nil repeats:YES];
+    [runloop addTimer:timer forMode:NSRunLoopCommonModes];
+    [runloop addTimer:timer forMode:UITrackingRunLoopMode];
+    
+//    //END GAME AFTER 60 SECS - removed
+//    popTime = dispatch_time(DISPATCH_TIME_NOW, 62.0f * NSEC_PER_SEC); //lamest code ever
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        //code to be executed on the main queue after delay
+//        [self endGame];
+//    });
         [self buildInfoPanel];
+    [self buildPatternPanel];
+    
 }
 - (void)update:(NSTimeInterval)currentTime{
     CGPoint pos;
     if ([self isFinished]) {
         [self endGame];
     }
-    if ([LevelManager checkLevel:self]) {
-        [self showLevelUp];
-    }
+//    if ([LevelManager checkLevel:self]) {
+//        [self showLevelUp];
+//    }
 //    int score = [scoreboardScene.scoreLabel.text intValue];
 //    score++;
 //    [scoreboardScene.scoreLabel setText: [NSString stringWithFormat:@"%i", score ]];
@@ -203,7 +220,10 @@
 }
 
 - (void)selectTile:(PHTile*)aTile{
-    [aTile setColor:[UIColor whiteColor]];
+    
+    
+    //[aTile setColor:[UIColor whiteColor]];
+    [aTile setTexture:[SKTexture textureWithImageNamed:@"blackTile.png"]];
     [aTile setIsSelected:YES];
     [selectedTiles addObject:aTile];
 }
@@ -241,9 +261,9 @@
     if ([selectedTiles count] < 3) {
         return NO;
     }
-    SKColor *refColor = [(PHTile*)[selectedTiles objectAtIndex:0] orginalColor];
+    int refColorCode = [(PHTile*)[selectedTiles objectAtIndex:0] orginalColorCode];
     for(PHTile *tempTile in selectedTiles){
-        if (tempTile.orginalColor != refColor) {
+        if (tempTile.orginalColorCode != refColorCode) {
             return NO;
         }
     }
@@ -266,13 +286,14 @@
     }
     int addedScore =[LevelManager calculatePointWith:selectedTiles.count andLevel:1 andPressure:10];
     [self popScoreOut:[(PHTile*)[selectedTiles lastObject] position] andValue:addedScore];
-    [[scoreboardScene scoreLabel] setText:[NSString stringWithFormat:@"%i",  addedScore+ [scoreboardScene.scoreLabel.text intValue]]];
+    [[scoreboardNode scoreLabel] setText:[NSString stringWithFormat:@"%i",  addedScore+ [scoreboardNode.scoreLabel.text intValue]]];
 }
 
 - (void)restartPattern{
     for(PHTile *tempTile in selectedTiles){
         [tempTile setIsSelected:NO];
-        [tempTile setColor:tempTile.orginalColor];
+//        [tempTile setColor:tempTile.orginalColorCode];
+       [tempTile setTexture:[SKTexture textureWithImageNamed:[PHProperties getImageNameWithNumber:tempTile.orginalColorCode]]];
     }
 }
 
@@ -296,13 +317,19 @@
 }
 
 - (void)buildInfoPanel{
-    scoreboardScene = [[ScoreBoardScene alloc] initWithColor:[UIColor redColor]  size:CGSizeMake(self.size.width, self.size.height *0.07)];
-    [scoreboardScene setMasterScene:self];
-    [scoreboardScene setPosition:CGPointMake(CGRectGetMidX(self.view.frame), self.size.height-scoreboardScene.size.height /2)];
+    scoreboardNode = [[ScoreBoardNode alloc] initWithColor:[UIColor colorWithRed:229.0f/255.0f green:106.0f/255.0f blue:13.0f/255.0f alpha:1]  size:CGSizeMake(self.size.width, self.size.height *0.12)];
+    [scoreboardNode setMasterScene:self];
+    [scoreboardNode setPosition:CGPointMake(CGRectGetMidX(self.view.frame), self.size.height-scoreboardNode.size.height /2)];
                        
                        //initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height * 0.10)];
 
-    [self addChild:scoreboardScene];
+    [self addChild:scoreboardNode];
+}
+
+- (void)buildPatternPanel{
+    UIView *aView = [[UIView alloc] initWithFrame:CGRectMake(self.frame.size.width *0.8, self.frame.size.height * 0.15, self.frame.size.width * 0.18, self.size.height * 0.1)];
+//    [self setBackgroundColor:[UIColor blueColor]];
+    [[self view]addSubview: aView];
 }
 
 - (BOOL)isFinished{
@@ -351,16 +378,28 @@
     SKAction *moveup = [SKAction moveByX:0 y:50 duration:0.5];
     SKAction *zoom = [SKAction scaleTo:2.0 duration:0.25];
     SKAction *pause = [SKAction waitForDuration:0.5];
-    //    SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
-    //    SKAction *remove = [SKAction removeFromParent];
-    //    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause,fadeAway,remove]];
-    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause]];
-    [helloNode runAction:seq completion:^{
-        SummaryScene *gameScene = [[SummaryScene alloc] initWithSize:self.size];
-        SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
-        [self.view presentScene:gameScene transition:doors];
-    }];
+        SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
+        SKAction *remove = [SKAction removeFromParent];
+        SKAction *seq = [SKAction sequence:@[moveup,zoom,pause,fadeAway,remove]];
+//    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause]];
+//    [helloNode runAction:seq completion:^{
+//        SummaryScene *gameScene = [[SummaryScene alloc] initWithSize:self.size];
+//        SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
+//        [self.view presentScene:gameScene transition:doors];
+//    }];
 
+}
+
+- (void)updateCounter{
+    secondsLeft = secondsLeft - 0.1f ;
+    if (secondsLeft < 0.0f) {
+        [timer invalidate];
+        [self endGame];
+        return;
+        
+    }
+    SKLabelNode *timeNode = (SKLabelNode*)[scoreboardNode childNodeWithName:@"timeNode"];
+    [timeNode setText:[NSString stringWithFormat:@"%.01f seconds",secondsLeft]];
 }
 
 @end

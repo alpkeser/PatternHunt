@@ -7,12 +7,31 @@
 //
 
 #import "AppDelegate.h"
-
+#import "GCHelper.h"
+#import "ViewController.h"
 @implementation AppDelegate
-
+@synthesize audioPlayer;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [[GCHelper sharedInstance] authenticateLocalUser];
+    
+    //add music
+//    [[AVAudioSession sharedInstance] setDelegate: self];
+//    NSError *setCategoryError = nil;
+//    [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
+//    [[AVAudioSession sharedInstance] setActive: YES error: &setCategoryError];
+//    
+//    if (setCategoryError)
+//        NSLog(@"Error setting category! %@", setCategoryError);
+//     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+//    
+//    NSString *path = [[NSBundle mainBundle]pathForResource:@"patternMenuMusic" ofType:@"aif"];
+//    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+//    [audioPlayer setNumberOfLoops:-1];
+//    [audioPlayer prepareToPlay];
+//    
+//    if([audioPlayer play])
     return YES;
 }
 							

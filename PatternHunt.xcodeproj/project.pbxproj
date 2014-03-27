@@ -27,14 +27,26 @@
 		3CD9F6741778A52700BB009E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CD9F6731778A52700BB009E /* ViewController.m */; };
 		B505A9B4179FBAD0007ADADA /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = B505A9B3179FBAD0007ADADA /* bg.png */; };
 		B51DE9EF17CB0D840079468C /* SummaryScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B51DE9EE17CB0D840079468C /* SummaryScene.m */; };
+		B529226F18CBE81400DDD47F /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B529226E18CBE81400DDD47F /* GameKit.framework */; };
+		B52B1D2B1848E86500398BA9 /* blackTile.png in Resources */ = {isa = PBXBuildFile; fileRef = B52B1D261848E86500398BA9 /* blackTile.png */; };
+		B52B1D2D1848E86500398BA9 /* greenTile.png in Resources */ = {isa = PBXBuildFile; fileRef = B52B1D281848E86500398BA9 /* greenTile.png */; };
+		B52B1D2E1848E86500398BA9 /* purpleTile.png in Resources */ = {isa = PBXBuildFile; fileRef = B52B1D291848E86500398BA9 /* purpleTile.png */; };
+		B52B1D2F1848E86500398BA9 /* redTile.png in Resources */ = {isa = PBXBuildFile; fileRef = B52B1D2A1848E86500398BA9 /* redTile.png */; };
+		B52C73A018CBC64A0004ED33 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B52C739F18CBC64A0004ED33 /* AVFoundation.framework */; };
+		B52C73A218CBC6F80004ED33 /* patternMenuMusic.aif in Resources */ = {isa = PBXBuildFile; fileRef = B52C73A118CBC6F80004ED33 /* patternMenuMusic.aif */; };
+		B5466E1F184BC1EE003D0748 /* PHPattern.m in Sources */ = {isa = PBXBuildFile; fileRef = B5466E1E184BC1EE003D0748 /* PHPattern.m */; };
 		B552F65217C35C8A0031AF34 /* normal_turuncu.png in Resources */ = {isa = PBXBuildFile; fileRef = B552F65117C35C8A0031AF34 /* normal_turuncu.png */; };
+		B58DC5E318CD2D7100CD9D38 /* blueTile.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DC5E218CD2D7100CD9D38 /* blueTile.png */; };
+		B58DC5E618CE896500CD9D38 /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DC5E518CE896500CD9D38 /* NetworkHelper.m */; };
 		B5A72007179DDEDA00F88EFB /* LevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A72006179DDEDA00F88EFB /* LevelManager.m */; };
-		B5C0FE7F17DCF9C700D2697E /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5C0FE7E17DCF9C700D2697E /* GameKit.framework */; };
-		B5C9486D17A65D15008EBCC6 /* ScoreBoardScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */; };
+		B5C9486D17A65D15008EBCC6 /* ScoreBoardNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9486C17A65D15008EBCC6 /* ScoreBoardNode.m */; };
 		B5CC117117972952006BB1F6 /* bos_kadran.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CC116F17972952006BB1F6 /* bos_kadran.png */; };
 		B5CC117217972952006BB1F6 /* meter_Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CC117017972952006BB1F6 /* meter_Icon.png */; };
 		B5DC4E47179653AB00DE61F5 /* ScoreboardView.m in Sources */ = {isa = PBXBuildFile; fileRef = B5DC4E46179653AB00DE61F5 /* ScoreboardView.m */; };
+		B5E6677E18B3724E009835B4 /* GCHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E6677D18B3724E009835B4 /* GCHelper.m */; };
+		B5E6678118B372DC009835B4 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E6678018B372DC009835B4 /* User.m */; };
 		B5ED8B551783F159000BDE77 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5ED8B541783F159000BDE77 /* StoreKit.framework */; };
+		B5F75F1A18CCAE4B0093B2C3 /* DuelGameScene.m in Sources */ = {isa = PBXBuildFile; fileRef = B5F75F1918CCAE4B0093B2C3 /* DuelGameScene.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,17 +82,34 @@
 		B505A9B3179FBAD0007ADADA /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		B51DE9ED17CB0D840079468C /* SummaryScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SummaryScene.h; sourceTree = "<group>"; };
 		B51DE9EE17CB0D840079468C /* SummaryScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SummaryScene.m; sourceTree = "<group>"; };
+		B529226E18CBE81400DDD47F /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		B52B1D261848E86500398BA9 /* blackTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackTile.png; sourceTree = "<group>"; };
+		B52B1D281848E86500398BA9 /* greenTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = greenTile.png; sourceTree = "<group>"; };
+		B52B1D291848E86500398BA9 /* purpleTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = purpleTile.png; sourceTree = "<group>"; };
+		B52B1D2A1848E86500398BA9 /* redTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redTile.png; sourceTree = "<group>"; };
+		B52C739F18CBC64A0004ED33 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		B52C73A118CBC6F80004ED33 /* patternMenuMusic.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = patternMenuMusic.aif; sourceTree = "<group>"; };
+		B5466E1D184BC1EE003D0748 /* PHPattern.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PHPattern.h; sourceTree = "<group>"; };
+		B5466E1E184BC1EE003D0748 /* PHPattern.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PHPattern.m; sourceTree = "<group>"; };
 		B552F65117C35C8A0031AF34 /* normal_turuncu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = normal_turuncu.png; sourceTree = "<group>"; };
+		B58DC5E218CD2D7100CD9D38 /* blueTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueTile.png; sourceTree = "<group>"; };
+		B58DC5E418CE896500CD9D38 /* NetworkHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkHelper.h; sourceTree = "<group>"; };
+		B58DC5E518CE896500CD9D38 /* NetworkHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkHelper.m; sourceTree = "<group>"; };
 		B5A72005179DDEDA00F88EFB /* LevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelManager.h; sourceTree = "<group>"; };
 		B5A72006179DDEDA00F88EFB /* LevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelManager.m; sourceTree = "<group>"; };
-		B5C0FE7E17DCF9C700D2697E /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
-		B5C9486B17A65D15008EBCC6 /* ScoreBoardScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreBoardScene.h; sourceTree = "<group>"; };
-		B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreBoardScene.m; sourceTree = "<group>"; };
+		B5C9486B17A65D15008EBCC6 /* ScoreBoardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreBoardNode.h; sourceTree = "<group>"; };
+		B5C9486C17A65D15008EBCC6 /* ScoreBoardNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreBoardNode.m; sourceTree = "<group>"; };
 		B5CC116F17972952006BB1F6 /* bos_kadran.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bos_kadran.png; sourceTree = "<group>"; };
 		B5CC117017972952006BB1F6 /* meter_Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = meter_Icon.png; sourceTree = "<group>"; };
 		B5DC4E45179653AB00DE61F5 /* ScoreboardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreboardView.h; sourceTree = "<group>"; };
 		B5DC4E46179653AB00DE61F5 /* ScoreboardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScoreboardView.m; sourceTree = "<group>"; };
+		B5E6677C18B3724D009835B4 /* GCHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCHelper.h; sourceTree = "<group>"; };
+		B5E6677D18B3724E009835B4 /* GCHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GCHelper.m; sourceTree = "<group>"; };
+		B5E6677F18B372DC009835B4 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		B5E6678018B372DC009835B4 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
 		B5ED8B541783F159000BDE77 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		B5F75F1818CCAE4B0093B2C3 /* DuelGameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DuelGameScene.h; sourceTree = "<group>"; };
+		B5F75F1918CCAE4B0093B2C3 /* DuelGameScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DuelGameScene.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,8 +117,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B5C0FE7F17DCF9C700D2697E /* GameKit.framework in Frameworks */,
+				B52C73A018CBC64A0004ED33 /* AVFoundation.framework in Frameworks */,
 				B5ED8B551783F159000BDE77 /* StoreKit.framework in Frameworks */,
+				B529226F18CBE81400DDD47F /* GameKit.framework in Frameworks */,
 				3C7A2AF6177A4D5200099873 /* SpriteKit.framework in Frameworks */,
 				3CD9F6581778A52700BB009E /* UIKit.framework in Frameworks */,
 				3CD9F65A1778A52700BB009E /* Foundation.framework in Frameworks */,
@@ -109,10 +139,12 @@
 				3C7A2AF0177A499B00099873 /* GameScene.m */,
 				B5DC4E45179653AB00DE61F5 /* ScoreboardView.h */,
 				B5DC4E46179653AB00DE61F5 /* ScoreboardView.m */,
-				B5C9486B17A65D15008EBCC6 /* ScoreBoardScene.h */,
-				B5C9486C17A65D15008EBCC6 /* ScoreBoardScene.m */,
+				B5C9486B17A65D15008EBCC6 /* ScoreBoardNode.h */,
+				B5C9486C17A65D15008EBCC6 /* ScoreBoardNode.m */,
 				B51DE9ED17CB0D840079468C /* SummaryScene.h */,
 				B51DE9EE17CB0D840079468C /* SummaryScene.m */,
+				B5F75F1818CCAE4B0093B2C3 /* DuelGameScene.h */,
+				B5F75F1918CCAE4B0093B2C3 /* DuelGameScene.m */,
 			);
 			name = Scenes;
 			sourceTree = "<group>";
@@ -126,6 +158,10 @@
 				3C7A2AFC177A4FFD00099873 /* PHCorridor.m */,
 				3C7A2AFE177A508500099873 /* PHTileFactory.h */,
 				3C7A2AFF177A508500099873 /* PHTileFactory.m */,
+				B5466E1D184BC1EE003D0748 /* PHPattern.h */,
+				B5466E1E184BC1EE003D0748 /* PHPattern.m */,
+				B5E6677F18B372DC009835B4 /* User.h */,
+				B5E6678018B372DC009835B4 /* User.m */,
 			);
 			name = Objects;
 			sourceTree = "<group>";
@@ -137,6 +173,10 @@
 				3C7A2B03177A582100099873 /* PHProperties.m */,
 				B5A72005179DDEDA00F88EFB /* LevelManager.h */,
 				B5A72006179DDEDA00F88EFB /* LevelManager.m */,
+				B5E6677C18B3724D009835B4 /* GCHelper.h */,
+				B5E6677D18B3724E009835B4 /* GCHelper.m */,
+				B58DC5E418CE896500CD9D38 /* NetworkHelper.h */,
+				B58DC5E518CE896500CD9D38 /* NetworkHelper.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -161,7 +201,8 @@
 		3CD9F6561778A52700BB009E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				B5C0FE7E17DCF9C700D2697E /* GameKit.framework */,
+				B529226E18CBE81400DDD47F /* GameKit.framework */,
+				B52C739F18CBC64A0004ED33 /* AVFoundation.framework */,
 				B5ED8B541783F159000BDE77 /* StoreKit.framework */,
 				3C7A2AF5177A4D5200099873 /* SpriteKit.framework */,
 				3CD9F6571778A52700BB009E /* UIKit.framework */,
@@ -206,6 +247,11 @@
 		B552F64F17C35C740031AF34 /* tiles */ = {
 			isa = PBXGroup;
 			children = (
+				B58DC5E218CD2D7100CD9D38 /* blueTile.png */,
+				B52B1D261848E86500398BA9 /* blackTile.png */,
+				B52B1D281848E86500398BA9 /* greenTile.png */,
+				B52B1D291848E86500398BA9 /* purpleTile.png */,
+				B52B1D2A1848E86500398BA9 /* redTile.png */,
 				B552F65017C35C7C0031AF34 /* orange_tile */,
 			);
 			name = tiles;
@@ -229,6 +275,7 @@
 		B5CC116E17972945006BB1F6 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				B52C73A118CBC6F80004ED33 /* patternMenuMusic.aif */,
 				B552F64F17C35C740031AF34 /* tiles */,
 				B505A9B3179FBAD0007ADADA /* bg.png */,
 				B5CC116F17972952006BB1F6 /* bos_kadran.png */,
@@ -269,6 +316,9 @@
 					3CD9F6531778A52700BB009E = {
 						DevelopmentTeam = WCG9HNJRTD;
 						SystemCapabilities = {
+							com.apple.GameCenter = {
+								enabled = 1;
+							};
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
@@ -303,10 +353,16 @@
 				B505A9B4179FBAD0007ADADA /* bg.png in Resources */,
 				B5CC117217972952006BB1F6 /* meter_Icon.png in Resources */,
 				3CD9F66A1778A52700BB009E /* Default.png in Resources */,
+				B58DC5E318CD2D7100CD9D38 /* blueTile.png in Resources */,
+				B52C73A218CBC6F80004ED33 /* patternMenuMusic.aif in Resources */,
+				B52B1D2E1848E86500398BA9 /* purpleTile.png in Resources */,
 				B552F65217C35C8A0031AF34 /* normal_turuncu.png in Resources */,
 				3CD9F66C1778A52700BB009E /* Default@2x.png in Resources */,
 				3CD9F66E1778A52700BB009E /* Default-568h@2x.png in Resources */,
 				3CD9F6711778A52700BB009E /* MainStoryboard.storyboard in Resources */,
+				B52B1D2B1848E86500398BA9 /* blackTile.png in Resources */,
+				B52B1D2F1848E86500398BA9 /* redTile.png in Resources */,
+				B52B1D2D1848E86500398BA9 /* greenTile.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,14 +373,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5E6678118B372DC009835B4 /* User.m in Sources */,
 				3C7A2B00177A508500099873 /* PHTileFactory.m in Sources */,
 				3CD9F6641778A52700BB009E /* main.m in Sources */,
-				B5C9486D17A65D15008EBCC6 /* ScoreBoardScene.m in Sources */,
+				B5C9486D17A65D15008EBCC6 /* ScoreBoardNode.m in Sources */,
 				B5A72007179DDEDA00F88EFB /* LevelManager.m in Sources */,
+				B5F75F1A18CCAE4B0093B2C3 /* DuelGameScene.m in Sources */,
 				3C7A2AEE177A47F500099873 /* MenuScene.m in Sources */,
 				3C7A2B04177A582100099873 /* PHProperties.m in Sources */,
+				B58DC5E618CE896500CD9D38 /* NetworkHelper.m in Sources */,
 				B5DC4E47179653AB00DE61F5 /* ScoreboardView.m in Sources */,
 				B51DE9EF17CB0D840079468C /* SummaryScene.m in Sources */,
+				B5466E1F184BC1EE003D0748 /* PHPattern.m in Sources */,
+				B5E6677E18B3724E009835B4 /* GCHelper.m in Sources */,
 				3C7A2AF1177A499B00099873 /* GameScene.m in Sources */,
 				3C7A2AFA177A4EA700099873 /* PHTile.m in Sources */,
 				3CD9F6681778A52700BB009E /* AppDelegate.m in Sources */,
@@ -418,13 +479,15 @@
 		3CD9F6781778A52700BB009E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F93CFB14-B415-4798-93AD-CA9950ED2121";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -433,13 +496,15 @@
 		3CD9F6791778A52700BB009E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yusuf Alp Keser (LP6A5N9ED4)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "F93CFB14-B415-4798-93AD-CA9950ED2121";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};

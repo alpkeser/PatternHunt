@@ -14,5 +14,5 @@
 + (float)getTileFactoryYInFrame:(CGRect)aFrame;
 + (float)getDistanceInFrame:(CGRect)aFrame;
 + (UIColor*)getColorWithNumber:(int)aColorNumber;
-
++ (NSString*)getImageNameWithNumber:(int)aColorNumber;
 @end

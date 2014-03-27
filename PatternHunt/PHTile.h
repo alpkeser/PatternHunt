@@ -14,6 +14,6 @@
 
 @property (nonatomic,retain) PHTileFactory *myFactory;
 @property (nonatomic,assign) BOOL isSelected;
-@property (nonatomic,assign) SKColor *orginalColor;
+@property (nonatomic,assign) int orginalColorCode;
 - (void)divideToFourPiece;
 @end
