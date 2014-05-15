@@ -23,7 +23,7 @@ typedef enum {
 typedef enum {
     kMessageTypeRandomNumber = 0,
     kMessageTypeGameBegin,
-    kMessageTypeMove,
+    kMessageTypeScoreUpdate,
     kMessageTypeGameOver
 } MessageType;
 
@@ -42,12 +42,14 @@ typedef struct {
 
 typedef struct {
     Message message;
+    float opponentScore;
 } MessageMove;
 
 typedef struct {
     Message message;
     BOOL player1Won; //always me
 } MessageGameOver;
+
 @interface NetworkHelper : NSObject{
     uint32_t ourRandom;
     BOOL receivedRandom;

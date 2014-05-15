@@ -9,10 +9,10 @@
 #import "PHProperties.h"
 
 @implementation PHProperties
-const float tilePerc =80;
+const float tilePerc =50;
 const int corridorNumber = 10;
-
-
+BOOL const isMute;
+NSString const * isMuteKey = @"ISMUTE";
 + (float)getTileFactoryXByOrder:(int)anOrder inFrame:(CGRect)aFrame{
     //1/koridor 0 dan baslra
     anOrder -=1;
@@ -22,7 +22,7 @@ const int corridorNumber = 10;
 }
 
 + (float)getTileSizeInFrame:(CGRect)aFrame{
-    return aFrame.size.width /corridorNumber * 0.9;
+    return aFrame.size.width /corridorNumber * 0.7;
     
 }
 + (float)getTileFactoryYInFrame:(CGRect)aFrame{
@@ -79,5 +79,28 @@ const int corridorNumber = 10;
     //sicti cafer bez getir
     //siyahh
      return @"blackTile.png";
+}
+
++ (void)setMute:(BOOL)isMute{
+    NSUserDefaults *standarduserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *param;
+    if (isMute) {
+        param = @"T";
+    }else{
+        param = @"F";
+    }
+    [standarduserDefaults setObject:param forKey:isMuteKey];
+    [standarduserDefaults synchronize];
+}
+
++ (BOOL)isMute{
+    NSUserDefaults *standarduserDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *param = [standarduserDefaults objectForKey:isMuteKey];
+    if ([param isEqualToString:@"F"]) {
+        return NO;
+    }
+    
+    return YES;
+
 }
 @end

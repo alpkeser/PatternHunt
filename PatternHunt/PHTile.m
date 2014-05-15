@@ -9,16 +9,17 @@
 #import "PHTile.h"
 
 @implementation PHTile
-@synthesize isSelected,myFactory;
+@synthesize isSelected,myFactory,tileType;
+#pragma mark - init methods
 
-- (void)divideToFourPiece{
-    float centerX = arc4random() % (int)self.size.width;
-    float centerY = arc4random() % (int)self.size.height;
-    float ustBaslangic = arc4random() % (int)self.size.width;
-    float altBaslangic = arc4random() % (int)self.size.width;
-    float solBaslangic = arc4random() % (int)self.size.height;
-    float sagBaslangic = arc4random() % (int)self.size.height;
-    
+- (id)initWithImageNamed:(NSString *)name{
+    return [self initWithImageNamed:name andTileType:NORMAL];
+}
+//generated bolumunde
+- (id)initWithImageNamed:(NSString *)name andTileType:(TileType)aTileType{
+    self = [super initWithImageNamed:name];
+    tileType = aTileType;
+    return self;
 }
 
 

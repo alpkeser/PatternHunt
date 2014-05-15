@@ -9,7 +9,12 @@
 #import <SpriteKit/SpriteKit.h>
 
 @interface SummaryScene : SKScene{
-    UIView *scoreView;
+//    UIView *scoreView;
+    SKSpriteNode *scoreboard;
+    SKLabelNode *scoreLabelNode;
+    SKLabelNode *playAgainLabelNode;
+    SKLabelNode *mainMenuLabelNode;
+    
 }
 
 @property (nonatomic, assign)float point;

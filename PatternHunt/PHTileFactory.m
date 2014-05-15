@@ -21,6 +21,7 @@
     [self logVariables];
     [self setIsRunning:running];
     [self setOrder:anOrder];
+    [self initTilePattern];
     return self;
     
 }
@@ -36,10 +37,29 @@
     [returnTile setAlpha:1.0f];
     return returnTile;
 }
+
+-(PHTile*)generateDeterminedTile{
+    if ([tilePattern count] <= 0) {
+//        NSLog(@"Dikkat randoma dustu");
+        return [self generateRandomTile];
+    }
+    int randomColorCode = [(NSNumber*)[tilePattern objectAtIndex:0] intValue];
+    [tilePattern removeObjectAtIndex:0];
+    PHTile *returnTile = [[PHTile alloc] initWithImageNamed:[PHProperties getImageNameWithNumber:randomColorCode]];
+    [returnTile setSize:CGSizeMake(tileSize, tileSize)];
+    //    [returnTile setScale:0.40];
+    [returnTile setIsSelected:NO];
+    [returnTile setOrginalColorCode:randomColorCode ];
+    //    [returnTile runAction:[SKAction rotateByAngle:45.0f duration:0]]
+    [returnTile setMyFactory:self];
+    [returnTile setAlpha:1.0f];
+    return returnTile;
+}
+
 - (void)allahinaFirlat:(SKScene*)aScene{
     
 
-                PHTile *aTile = [self generateRandomTile];
+                PHTile *aTile = [self generateDeterminedTile];
                 [myTiles addObject:aTile];
                 [aTile setPosition:CGPointMake(aX, aY)];
                 [aScene addChild:aTile];
@@ -76,20 +96,45 @@
 }
 
 - (void)sendNewTile:(SKScene*)aScene{
+//    if (myTiles.count == 0) {
+//        [self allahinaFirlat:aScene];
+//    }
+//    @try {
+//        
+//        PHTile *lastTile = [myTiles lastObject];
+//        if (!isRunning && [self doesTileReachedEnd:[myTiles objectAtIndex:0]]) {
+//            return;
+//        }
+//        if (! (lastTile.position.y > (aY - (tileSize + (-1 * distance) * 0.005)))) {
+//          
+//                 [self allahinaFirlat:aScene];
+//        }
+//
+//    }
+//    @catch (NSException *exception) {
+//        
+//    }
+//    @finally {
+//        
+//    }
+    [self allahinaFirlat:aScene];
+}
+
+- (BOOL)shouldSendNewTile{
     if (myTiles.count == 0) {
-        [self allahinaFirlat:aScene];
+        return YES;
     }
     @try {
         
         PHTile *lastTile = [myTiles lastObject];
         if (!isRunning && [self doesTileReachedEnd:[myTiles objectAtIndex:0]]) {
-            return;
+            return NO;
         }
         if (! (lastTile.position.y > (aY - (tileSize + (-1 * distance) * 0.005)))) {
-          
-                 [self allahinaFirlat:aScene];
+            
+            return YES;
         }
-
+        
     }
     @catch (NSException *exception) {
         
@@ -97,6 +142,7 @@
     @finally {
         
     }
+    return NO;
 }
 
 

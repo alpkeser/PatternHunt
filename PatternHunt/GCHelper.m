@@ -1,4 +1,4 @@
-    //
+//
 //  GCHelper.m
 //  PatternHunt
 //
@@ -41,6 +41,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
 - (id)init {
     if ((self = [super init])) {
         gameCenterAvailable = [self isGameCenterAvailable];
+        isDuelRequestSent = NO;
         if (gameCenterAvailable) {
             NSNotificationCenter *nc =
             [NSNotificationCenter defaultCenter];
@@ -58,7 +59,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
     if ([
          GKLocalPlayer localPlayer].isAuthenticated && !userAuthenticated) {
         NSLog(@"Authentication changed: player authenticated.");
-           //[[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterLoggedIn object:nil];
+        //[[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterLoggedIn object:nil];
         userAuthenticated = TRUE;
     } else if (![GKLocalPlayer localPlayer].isAuthenticated && userAuthenticated) {
         NSLog(@"Authentication changed: player not authenticated");
@@ -78,7 +79,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
         [[GKLocalPlayer localPlayer] authenticateWithCompletionHandler:nil];
     } else {
         NSLog(@"Already authenticated!");
-     
+        
     }
 }
 
@@ -89,25 +90,95 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
                        delegate:(id<GCHelperDelegate>)theDelegate {
     
     if (!gameCenterAvailable) return;
-    
+    if (isDuelRequestSent) {
+        return;
+    }
+    isDuelRequestSent = YES;
     matchStarted = NO;
     self.match = nil;
     self.presentingViewController = viewController;
     delegate = theDelegate;
-    [presentingViewController dismissModalViewControllerAnimated:NO];
+//    [presentingViewController dismissModalViewControllerAnimated:NO];
     
     GKMatchRequest *request = [[GKMatchRequest alloc] init] ;
     request.minPlayers = minPlayers;
     request.maxPlayers = maxPlayers;
     
-    GKMatchmakerViewController *mmvc =
-    [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
-    mmvc.matchmakerDelegate = self;
+    //    GKMatchmakerViewController *mmvc =
+    //    [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
+    //    mmvc.matchmakerDelegate = self;
+    //
+    //    [presentingViewController presentModalViewController:mmvc animated:YES];
     
-    [presentingViewController presentModalViewController:mmvc animated:YES];
+    [[GKMatchmaker sharedMatchmaker] findMatchForRequest:request withCompletionHandler:^(GKMatch *match, NSError *error) {
+        isDuelRequestSent = NO;
+        if (error)
+        {
+            // Process the error.
+        }
+        else if (match != nil)
+        {
+             // Use a retaining property to retain the match.
+            match.delegate = self;
+            self.match = match;
+            if (!matchStarted && match.expectedPlayerCount == 0)
+            {
+                matchStarted = YES;
+                // Insert application-specific code to begin the match.
+                //decide who is server if client wait for the tile if server generate and send then wait client ok response then go
+                NSLog(@"go aalpk");
+                
+            }
+        }
+    }];
+    
     
 }
+//- (IBAction)findProgrammaticMatch: (id) sender
+//{
+//    GKMatchRequest *request = [[[GKMatchRequest alloc] init] autorelease];
+//    request.minPlayers = 2;
+//    request.maxPlayers = 4;
+//
+//    [[GKMatchmaker sharedMatchmaker] findMatchForRequest:request withCompletionHandler:^(GKMatch *match, NSError *error) {
+//        if (error)
+//        {
+//            // Process the error.
+//        }
+//        else if (match != nil)
+//        {
+//            self.myMatch = match; // Use a retaining property to retain the match.
+//            match.delegate = self;
+//            if (!self.matchStarted && match.expectedPlayerCount == 0)
+//            {
+//                self.matchStarted = YES;
+//                // Insert application-specific code to begin the match.
+//            }
+//        }
+//    }];
+//}
 
+-(void)showLeaderboardWithViewController:(UIViewController*)aVC{
+    // tutorial: http://www.appcoda.com/ios-game-kit-framework/
+    GKGameCenterViewController *gcViewController = [[GKGameCenterViewController alloc] init];
+    
+    gcViewController.gameCenterDelegate = self;
+    
+    //    if (shouldShowLeaderboard) {
+    gcViewController.viewState = GKGameCenterViewControllerStateLeaderboards;
+    gcViewController.leaderboardIdentifier = @"high_score_in_single";
+    //    }
+    //    else{
+    //        gcViewController.viewState = GKGameCenterViewControllerStateAchievements;
+    //    }
+    
+    [aVC presentViewController:gcViewController animated:YES completion:nil];
+}
+
+-(void)gameCenterViewControllerDidFinish:(GKGameCenterViewController *)gameCenterViewController
+{
+    [gameCenterViewController dismissViewControllerAnimated:YES completion:nil];
+}
 #pragma mark GKMatchmakerViewControllerDelegate
 
 // The user has cancelled matchmaking
@@ -129,7 +200,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
     if (!matchStarted && match.expectedPlayerCount == 0) {
         NSLog(@"Ready to start match!");
         [self lookupPlayers];
-     //   [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterStartDuel object:nil];
+        //   [[NSNotificationCenter defaultCenter] postNotificationName:kGameCenterStartDuel object:nil];
     }
 }
 
@@ -165,7 +236,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
                 NSLog(@"Ready to start match!");
                 //should send a notfification to start game
                 [self lookupPlayers];
-//    [delegate match:theMatch didReceiveData:data fromPlayer:playerID];
+                //    [delegate match:theMatch didReceiveData:data fromPlayer:playerID];
             }
             
             break;
@@ -199,29 +270,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
 }
 
 
-//- (IBAction)findProgrammaticMatch: (id) sender
-//{
-//    GKMatchRequest *request = [[[GKMatchRequest alloc] init] autorelease];
-//    request.minPlayers = 2;
-//    request.maxPlayers = 4;
-//    
-//    [[GKMatchmaker sharedMatchmaker] findMatchForRequest:request withCompletionHandler:^(GKMatch *match, NSError *error) {
-//        if (error)
-//        {
-//            // Process the error.
-//        }
-//        else if (match != nil)
-//        {
-//            self.myMatch = match; // Use a retaining property to retain the match.
-//            match.delegate = self;
-//            if (!self.matchStarted && match.expectedPlayerCount == 0)
-//            {
-//                self.matchStarted = YES;
-//                // Insert application-specific code to begin the match.
-//            }
-//        }
-//    }];
-//}
+
 
 
 - (void)lookupPlayers {
@@ -245,7 +294,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
             // Notify delegate match can begin
             matchStarted = YES;
             [delegate prepareMatch];
-//            [delegate matchStarted];
+            //            [delegate matchStarted];
             
         }
     }];

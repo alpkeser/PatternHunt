@@ -12,7 +12,7 @@
     UILabel *scoreLabel;
 }
 @property (nonatomic,retain) UIImageView *okView ;
-@property (nonatomic,retain)     UILabel *scoreLabel;
+@property (nonatomic,retain) UILabel *scoreLabel;
 
 
 @end

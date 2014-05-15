@@ -18,10 +18,10 @@ extern NSString * const kGameCenterStartDuel;
 - (void)match:(GKMatch *)match didReceiveData:(NSData *)data
    fromPlayer:(NSString *)playerID;
 @end
-@interface GCHelper : NSObject <GKMatchmakerViewControllerDelegate, GKMatchDelegate>{
+@interface GCHelper : NSObject <GKMatchmakerViewControllerDelegate, GKMatchDelegate,GKGameCenterControllerDelegate>{
     BOOL gameCenterAvailable;
     BOOL userAuthenticated;
-    
+    BOOL isDuelRequestSent;
     // for matchmaking
     UIViewController *presentingViewController;
     GKMatch *match;
@@ -47,4 +47,6 @@ extern NSString * const kGameCenterStartDuel;
 - (void)findMatchWithMinPlayers:(int)minPlayers maxPlayers:(int)maxPlayers
                  viewController:(UIViewController *)viewController
                        delegate:(id<GCHelperDelegate>)theDelegate;
+
+-(void)showLeaderboardWithViewController:(UIViewController*)aVC;
 @end

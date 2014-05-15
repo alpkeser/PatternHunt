@@ -13,6 +13,7 @@
 #import "SummaryScene.h"
 @implementation GameScene
 @synthesize contentCreated;
+#pragma mark - SKScene event methods
 - (void)didMoveToView:(SKView *)view
 {
     [LevelManager initLevels];
@@ -33,9 +34,9 @@
     isSceneStopped = NO;
     doesGameStarted = NO;
     factories = [[NSMutableArray alloc] init];
-    PHTileFactory *aFactory = [[PHTileFactory alloc] initWithOrder:1 inFrame:self.view.frame isRunning:NO];
+    PHTileFactory *aFactory = [[PHTileFactory alloc] initWithOrder:1 inFrame:self.view.frame isRunning:YES];
 
-//    [aFactory allahinaFirlat:self];
+
     [factories addObject:aFactory];
     aFactory = [[PHTileFactory alloc] initWithOrder:2 inFrame:self.view.frame isRunning:YES];
  
@@ -59,7 +60,7 @@
   [factories addObject:aFactory];
     aFactory = [[PHTileFactory alloc] initWithOrder:9 inFrame:self.view.frame isRunning:YES];
   [factories addObject:aFactory];
-    aFactory = [[PHTileFactory alloc] initWithOrder:10 inFrame:self.view.frame isRunning:NO];
+    aFactory = [[PHTileFactory alloc] initWithOrder:10 inFrame:self.view.frame isRunning:YES];
   [factories addObject:aFactory];
     
 //    PHCorridor *aCorridor = [[PHCorridor alloc] initWithOrder:1 withFrame:self.view.frame andScene:self andRunning:YES];
@@ -102,17 +103,23 @@
         for (UITouch *touch in touchesStack) {
 //            pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
               pos = [touch locationInView: self.view];
-            [self processTouchWithX:pos.x andAY:pos.y];
+            [self processTouchWithX:pos.x andAY:pos.y]; //-aalpk
+//            [self selectTile:(PHTile*)[self nodeAtPoint:pos]];
         }
     }else{
-        for (PHTileFactory *tileFac in factories) {
-            [tileFac sendNewTile:self];
+        PHTileFactory *aTileFactory = [factories objectAtIndex:0];//temp aalpk
+        if ([aTileFactory shouldSendNewTile]) {
+            for (PHTileFactory *tileFac in factories) {
+                [tileFac sendNewTile:self];
+            }
         }
+        
     }
     
     
 }
 
+#pragma mark - touch delegates
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     if (!doesGameStarted) {
         return;
@@ -168,9 +175,12 @@
     }
 }
 
-- (void)processTouchWithX:(float)aX andAY:(float)aY{
+#pragma mark - custom code
 
+- (void)processTouchWithX:(float)aX andAY:(float)aY{
+//
     PHTile *firstTile;
+//    self nodeAtPoint:CGPointMake(CGFloat x, <#CGFloat y#>)
     for (PHTileFactory *factory in factories) {
         //once xsine bakıp bu boylamdamı ona gore hepsini dolasırsın
         if (factory.myTiles.count <= 0) {
@@ -221,9 +231,13 @@
 
 - (void)selectTile:(PHTile*)aTile{
     
-    
+    if (aTile == nil) {
+        return;
+    }
     //[aTile setColor:[UIColor whiteColor]];
+    //aalpk
     [aTile setTexture:[SKTexture textureWithImageNamed:@"blackTile.png"]];
+//    [aTile setFillColor:[UIColor blackColor]];
     [aTile setIsSelected:YES];
     [selectedTiles addObject:aTile];
 }
@@ -354,6 +368,7 @@
     SKAction *seq = [SKAction sequence:@[moveup,zoom,pause]];
     [helloNode runAction:seq completion:^{
         SummaryScene *gameScene = [[SummaryScene alloc] initWithSize:self.size];
+        [gameScene setPoint:[scoreboardNode.scoreLabel.text floatValue]];
         SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
         [self.view presentScene:gameScene transition:doors];
     }];
@@ -396,10 +411,11 @@
         [timer invalidate];
         [self endGame];
         return;
-        
     }
     SKLabelNode *timeNode = (SKLabelNode*)[scoreboardNode childNodeWithName:@"timeNode"];
     [timeNode setText:[NSString stringWithFormat:@"%.01f seconds",secondsLeft]];
 }
+
+
 
 @end

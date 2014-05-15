@@ -9,11 +9,21 @@
 #import <Foundation/Foundation.h>
 #import <SpriteKit/SpriteKit.h>
 @class PHTileFactory;
-@interface PHTile : SKSpriteNode
+typedef enum{
+    NORMAL,
+    JOKER,
+    REVERSER
+}TileType;
+@interface PHTile : SKSpriteNode{
+    TileType tileType;
+}
 
 
 @property (nonatomic,retain) PHTileFactory *myFactory;
 @property (nonatomic,assign) BOOL isSelected;
 @property (nonatomic,assign) int orginalColorCode;
-- (void)divideToFourPiece;
+@property (nonatomic,assign) TileType tileType;
+//@property (nonatomic,assign) TileType tileType;
+
+- (id)initWithImageNamed:(NSString *)name andTileType:(TileType)aTileType;
 @end

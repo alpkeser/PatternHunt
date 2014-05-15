@@ -13,8 +13,8 @@
 #define kDuelButtonYPosition 0.60
 #define kLeaderboardsButtonYPosition 0.50
 @implementation MenuScene
-
-@synthesize contentCreated,parentVC;
+UIViewController const *parentVC;
+@synthesize contentCreated;
 
 - (void)didMoveToView:(SKView *)view{
     if (!self.contentCreated) {
@@ -36,6 +36,11 @@
     [self addChild:[self singleNode]];
     [self addChild:[self duelNode]];
     [self addChild:[self leaderboardNode]];
+    [self addChild:[self settingsNode]];
+//    for (int sayac = 0; sayac<200; sayac++) {
+//        [self testShapeNode];
+//    }
+////    [self testShapeNode];
     
     
 }
@@ -63,11 +68,20 @@
 //Leaderboards button
 - (SKLabelNode*)leaderboardNode{
     SKLabelNode *leaderboardNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    [leaderboardNode setText:@"Leaderboards"];
+    [leaderboardNode setText:@"Leaderboard"];
     [leaderboardNode setFontSize:22];
     [leaderboardNode setPosition:CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height * kLeaderboardsButtonYPosition)];
     [leaderboardNode setName:@"leaderboardNode"];
     return leaderboardNode;
+    
+}
+
+- (SKSpriteNode*)settingsNode{
+    SKSpriteNode* settingsNode = [[SKSpriteNode alloc] initWithImageNamed:@"redTile.png"];
+    [settingsNode setSize:CGSizeMake(self.frame.size.width * 0.15, self.frame.size.height * 0.15)];
+    [settingsNode setPosition:CGPointMake(self.frame.size.width * 0.4, self.frame.size.height * - 0.4)];
+//    [muteNode setPosition:CGPointMake(0, 0)];
+    return settingsNode;
     
 }
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -99,9 +113,13 @@
         return;
     }
     
+    if ([[helloNode name] isEqualToString:@"leaderboardNode"]) {
+        [self showLeaderboard];
+    }
     
     
-#pragma mark - game mode code
+    
+
 //    if ([[helloNode name] isEqualToString:@"deatmatchNode"]) {
 //        gameMode = DEATHMATCH;
 //
@@ -115,6 +133,11 @@
 //
 
     
+}
+#pragma mark - action methods
+-(void)showLeaderboard{
+    GCHelper *helper = [GCHelper sharedInstance];
+    [helper showLeaderboardWithViewController:self.parentVC];
 }
 
 - (void)showGameModePanel{
@@ -208,6 +231,46 @@
 
 - (void)match:(GKMatch *)match didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID {
     NSLog(@"Received data");
+    
 }
 
+
+
+- (void)testShapeNode{
+    
+    //// Color Declarations
+    UIColor* fillColor = [UIColor colorWithRed: 0.114 green: 0.705 blue: 1 alpha: 1];
+    UIColor* strokeColor = [UIColor colorWithRed: 0 green: 0.295 blue: 0.886 alpha: 1];
+    
+    //// Rounded Rectangle Drawing
+    UIBezierPath* roundedRectanglePath = [UIBezierPath bezierPathWithRoundedRect: CGRectMake(48.5, 14.5, 70, 70) cornerRadius: 21];
+
+
+    CGFloat roundedRectanglePattern[] = {1, 1, 1, 1};
+    [roundedRectanglePath setLineDash: roundedRectanglePattern count: 4 phase: 0];
+
+    
+    CGPathRef cgPath = CGPathCreateCopy(roundedRectanglePath.CGPath);
+
+    SKShapeNode *aNode = [[SKShapeNode alloc] init];
+    [aNode setPath:cgPath];
+    [aNode setFillColor:fillColor];
+    [aNode setStrokeColor:fillColor];
+    [aNode setLineWidth:1.0f];
+    [aNode setGlowWidth:1.0f];
+    [aNode setAntialiased:YES];
+    [aNode setBlendMode:SKBlendModeAlpha];
+    [self addChild:aNode];
+    
+    
+                    
+}
+
+- (UIViewController*)parentVC{
+    return parentVC;
+}
+
+- (void)setParentVC:(UIViewController*)aVC{
+    parentVC = aVC;
+}
 @end

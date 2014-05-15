@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "GCHelper.h"
 #import "NetworkHelper.h"
+
 typedef enum{
     SINGLE_PLAYER,
     MULTIPLAYER
@@ -30,5 +31,9 @@ typedef enum{
 
 }
 @property BOOL contentCreated;
-@property (nonatomic,retain)    UIViewController *parentVC;
+
+
+- (void)setParentVC:(UIViewController*)aVC;
+- (UIViewController*)parentVC;
+
 @end

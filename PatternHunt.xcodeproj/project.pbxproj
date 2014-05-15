@@ -38,6 +38,8 @@
 		B552F65217C35C8A0031AF34 /* normal_turuncu.png in Resources */ = {isa = PBXBuildFile; fileRef = B552F65117C35C8A0031AF34 /* normal_turuncu.png */; };
 		B58DC5E318CD2D7100CD9D38 /* blueTile.png in Resources */ = {isa = PBXBuildFile; fileRef = B58DC5E218CD2D7100CD9D38 /* blueTile.png */; };
 		B58DC5E618CE896500CD9D38 /* NetworkHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B58DC5E518CE896500CD9D38 /* NetworkHelper.m */; };
+		B59E64C418EBE97800B77E4E /* wood_bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B59E64C318EBE97800B77E4E /* wood_bg.jpg */; };
+		B59E64C618EBF02A00B77E4E /* sampleTile.png in Resources */ = {isa = PBXBuildFile; fileRef = B59E64C518EBF02A00B77E4E /* sampleTile.png */; };
 		B5A72007179DDEDA00F88EFB /* LevelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B5A72006179DDEDA00F88EFB /* LevelManager.m */; };
 		B5C9486D17A65D15008EBCC6 /* ScoreBoardNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B5C9486C17A65D15008EBCC6 /* ScoreBoardNode.m */; };
 		B5CC117117972952006BB1F6 /* bos_kadran.png in Resources */ = {isa = PBXBuildFile; fileRef = B5CC116F17972952006BB1F6 /* bos_kadran.png */; };
@@ -95,6 +97,8 @@
 		B58DC5E218CD2D7100CD9D38 /* blueTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blueTile.png; sourceTree = "<group>"; };
 		B58DC5E418CE896500CD9D38 /* NetworkHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkHelper.h; sourceTree = "<group>"; };
 		B58DC5E518CE896500CD9D38 /* NetworkHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkHelper.m; sourceTree = "<group>"; };
+		B59E64C318EBE97800B77E4E /* wood_bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = wood_bg.jpg; sourceTree = "<group>"; };
+		B59E64C518EBF02A00B77E4E /* sampleTile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sampleTile.png; sourceTree = "<group>"; };
 		B5A72005179DDEDA00F88EFB /* LevelManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LevelManager.h; sourceTree = "<group>"; };
 		B5A72006179DDEDA00F88EFB /* LevelManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LevelManager.m; sourceTree = "<group>"; };
 		B5C9486B17A65D15008EBCC6 /* ScoreBoardNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScoreBoardNode.h; sourceTree = "<group>"; };
@@ -275,6 +279,8 @@
 		B5CC116E17972945006BB1F6 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				B59E64C518EBF02A00B77E4E /* sampleTile.png */,
+				B59E64C318EBE97800B77E4E /* wood_bg.jpg */,
 				B52C73A118CBC6F80004ED33 /* patternMenuMusic.aif */,
 				B552F64F17C35C740031AF34 /* tiles */,
 				B505A9B3179FBAD0007ADADA /* bg.png */,
@@ -356,9 +362,11 @@
 				B58DC5E318CD2D7100CD9D38 /* blueTile.png in Resources */,
 				B52C73A218CBC6F80004ED33 /* patternMenuMusic.aif in Resources */,
 				B52B1D2E1848E86500398BA9 /* purpleTile.png in Resources */,
+				B59E64C618EBF02A00B77E4E /* sampleTile.png in Resources */,
 				B552F65217C35C8A0031AF34 /* normal_turuncu.png in Resources */,
 				3CD9F66C1778A52700BB009E /* Default@2x.png in Resources */,
 				3CD9F66E1778A52700BB009E /* Default-568h@2x.png in Resources */,
+				B59E64C418EBE97800B77E4E /* wood_bg.jpg in Resources */,
 				3CD9F6711778A52700BB009E /* MainStoryboard.storyboard in Resources */,
 				B52B1D2B1848E86500398BA9 /* blackTile.png in Resources */,
 				B52B1D2F1848E86500398BA9 /* redTile.png in Resources */,
@@ -442,9 +450,9 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "DF9B7C06-8FEE-48FE-B396-6119344F4E76";
+				PROVISIONING_PROFILE = "38EFE40C-BABA-40CB-8095-B75D90913D94";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -468,9 +476,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "DF9B7C06-8FEE-48FE-B396-6119344F4E76";
+				PROVISIONING_PROFILE = "38EFE40C-BABA-40CB-8095-B75D90913D94";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -485,9 +494,10 @@
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F93CFB14-B415-4798-93AD-CA9950ED2121";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = PatternHunt;
+				PROVISIONING_PROFILE = "38EFE40C-BABA-40CB-8095-B75D90913D94";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
@@ -502,9 +512,10 @@
 				GCC_PREFIX_HEADER = "PatternHunt/PatternHunt-Prefix.pch";
 				INFOPLIST_FILE = "PatternHunt/PatternHunt-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "F93CFB14-B415-4798-93AD-CA9950ED2121";
+				ONLY_ACTIVE_ARCH = NO;
+				PRODUCT_NAME = PatternHunt;
+				PROVISIONING_PROFILE = "38EFE40C-BABA-40CB-8095-B75D90913D94";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
