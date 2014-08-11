@@ -10,6 +10,10 @@
 	<string>PatternHunt</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>14F6BF8EA148D12D3DB08C946521DCCB9612A319</key>
+		<string>https://github.com/alpkeser/PatternHunt.git</string>
+		<key>97ECE1C22D29600447BBB35E2F94326D3531AB0D</key>
+		<string>https://github.com/alpkeser/PatternHunt.git</string>
 		<key>F3C7DBE2-1296-408A-95F0-AB70F2225B06</key>
 		<string>https://github.com/alpkeser/PatternHunt.git</string>
 	</dict>
@@ -17,22 +21,34 @@
 	<string>PatternHunt.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>F3C7DBE2-1296-408A-95F0-AB70F2225B06</key>
+		<key>14F6BF8EA148D12D3DB08C946521DCCB9612A319</key>
 		<string>../../PatternHunt</string>
+		<key>97ECE1C22D29600447BBB35E2F94326D3531AB0D</key>
+		<string>../..</string>
+		<key>F3C7DBE2-1296-408A-95F0-AB70F2225B06</key>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/alpkeser/PatternHunt.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>F3C7DBE2-1296-408A-95F0-AB70F2225B06</string>
+	<string>97ECE1C22D29600447BBB35E2F94326D3531AB0D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>F3C7DBE2-1296-408A-95F0-AB70F2225B06</string>
+			<string>97ECE1C22D29600447BBB35E2F94326D3531AB0D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PatternHunt</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>14F6BF8EA148D12D3DB08C946521DCCB9612A319</string>
 			<key>IDESourceControlWCCName</key>
 			<string>PatternHunt</string>
 		</dict>

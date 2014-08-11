@@ -15,4 +15,8 @@
 + (float)getDistanceInFrame:(CGRect)aFrame;
 + (UIColor*)getColorWithNumber:(int)aColorNumber;
 + (NSString*)getImageNameWithNumber:(int)aColorNumber;
++ (float)fontSizeForScoreBoard;
++ (float)fontSizeForGameScene;
++ (float)sizeForTraceStroke;
++ (float)pauseButtonSize;
 @end

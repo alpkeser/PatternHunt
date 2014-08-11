@@ -8,7 +8,7 @@
 
 #import "GCHelper.h"
 #import "User.h"
-#import "NetworkHelper.h"
+
 
 @implementation GCHelper
 @synthesize presentingViewController;
@@ -42,6 +42,7 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
     if ((self = [super init])) {
         gameCenterAvailable = [self isGameCenterAvailable];
         isDuelRequestSent = NO;
+        _networkHelper = [NetworkHelper new];
         if (gameCenterAvailable) {
             NSNotificationCenter *nc =
             [NSNotificationCenter defaultCenter];
@@ -104,34 +105,34 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
     request.minPlayers = minPlayers;
     request.maxPlayers = maxPlayers;
     
-    //    GKMatchmakerViewController *mmvc =
-    //    [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
-    //    mmvc.matchmakerDelegate = self;
-    //
-    //    [presentingViewController presentModalViewController:mmvc animated:YES];
+        GKMatchmakerViewController *mmvc =
+        [[GKMatchmakerViewController alloc] initWithMatchRequest:request];
+        mmvc.matchmakerDelegate = self;
     
-    [[GKMatchmaker sharedMatchmaker] findMatchForRequest:request withCompletionHandler:^(GKMatch *match, NSError *error) {
-        isDuelRequestSent = NO;
-        if (error)
-        {
-            // Process the error.
-        }
-        else if (match != nil)
-        {
-             // Use a retaining property to retain the match.
-            match.delegate = self;
-            self.match = match;
-            if (!matchStarted && match.expectedPlayerCount == 0)
-            {
-                matchStarted = YES;
-                // Insert application-specific code to begin the match.
-                //decide who is server if client wait for the tile if server generate and send then wait client ok response then go
-                NSLog(@"go aalpk");
-                
-            }
-        }
-    }];
+        [presentingViewController presentModalViewController:mmvc animated:YES];
     
+//    [[GKMatchmaker sharedMatchmaker] findMatchForRequest:request withCompletionHandler:^(GKMatch *match, NSError *error) {
+//        isDuelRequestSent = NO;
+//        if (error)
+//        {
+//            // Process the error.
+//        }
+//        else if (match != nil)
+//        {
+//             // Use a retaining property to retain the match.
+//            match.delegate = self;
+//            self.match = match;
+//            if (!matchStarted && match.expectedPlayerCount == 0)
+//            {
+//                matchStarted = YES;
+//                // Insert application-specific code to begin the match.
+//                //decide who is server if client wait for the tile if server generate and send then wait client ok response then go
+//                NSLog(@"go aalpk");
+//                
+//            }
+//        }
+//    }];
+//    
     
 }
 //- (IBAction)findProgrammaticMatch: (id) sender
@@ -183,17 +184,27 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
 
 // The user has cancelled matchmaking
 - (void)matchmakerViewControllerWasCancelled:(GKMatchmakerViewController *)viewController {
+#if DEBUG 
+    NSLog(@"matchMaker canceled");
+#endif
+        isDuelRequestSent = NO;
     [presentingViewController dismissModalViewControllerAnimated:YES];
 }
 
 // Matchmaking has failed with an error
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFailWithError:(NSError *)error {
-    [presentingViewController dismissModalViewControllerAnimated:YES];
+#if DEBUG
+    NSLog(@"matchMaker fail w error");
     NSLog(@"Error finding match: %@", error.localizedDescription);
+#endif
+    [presentingViewController dismissModalViewControllerAnimated:YES];
+        isDuelRequestSent = NO;
+    
 }
 
 // A peer-to-peer match has been found, the game should start
 - (void)matchmakerViewController:(GKMatchmakerViewController *)viewController didFindMatch:(GKMatch *)theMatch {
+        isDuelRequestSent = NO;
     [presentingViewController dismissModalViewControllerAnimated:YES];
     self.match = theMatch;
     match.delegate = self;
@@ -209,17 +220,50 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
 
 // The match received data sent from the player.
 - (void)match:(GKMatch *)theMatch didReceiveData:(NSData *)data fromPlayer:(NSString *)playerID {
+#if DEBUG
+    NSLog(@"recievedData");
+#endif
+    
     if (match != theMatch) return;
     
     // Store away other player ID for later
     if (otherPlayerID == nil) {
         otherPlayerID = playerID;
     }
-    
     Message *message = (Message *) [data bytes];
+    
+    //decide server / client
     if (message->messageType == kMessageTypeRandomNumber) {
         
         MessageRandomNumber * messageInit = (MessageRandomNumber *) [data bytes];
+        if ([_networkHelper ourRandom]>messageInit->randomNumber) {
+            [_networkHelper setIsServer:YES];
+        }else{
+#if DEBUG
+            NSLog(@"isserverno");
+#endif
+            [_networkHelper setIsServer:NO];
+        }
+        [delegate numbersRecieved];
+        NSLog(@"%i",messageInit->randomNumber);
+        return;
+    }
+    
+    //getfactories appearantly
+    if (message->messageType == kMessageTypeColorCodes) {
+        
+        MessageColorCodes * messageColorCodes = (MessageColorCodes *) [data bytes];
+        
+        [delegate colorCodesRecieved:messageColorCodes->colorCodes];
+
+    }
+    //points recieved
+    if (message->messageType == kMessageTypePoints) {
+        
+        MessagePoints * messagePoints = (MessagePoints *) [data bytes];
+        
+        [delegate pointRecieved:messagePoints->points];
+        
     }
 }
 
@@ -298,6 +342,14 @@ NSString * const kGameCenterStartDuel = @"kStartDuel";
             
         }
     }];
+    
+}
+
+- (void)decideServerWithResponseRandom:(uint32_t)number{
+    [_networkHelper setReceivedRandom:YES];
+    if ([ _networkHelper ourRandom] > number) {
+        [_networkHelper setIsServer:YES];
+    }
     
 }
 

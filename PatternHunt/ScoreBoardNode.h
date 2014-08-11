@@ -7,19 +7,22 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-
 @interface ScoreBoardNode : SKSpriteNode{
     SKLabelNode *scoreLabel;
-    
+    SKLabelNode *otherScoreLabelNode;
     //node positions
     CGPoint timeLabelPosition;
     CGPoint timePosition;
     CGPoint scoreLabelPosition;
     CGPoint scorePosition;
     
+    CGPoint otherScoreLabelPosition;
+    CGPoint otherScorePosition;
+    float  fontSize;
+    
 }
 @property (nonatomic,retain) SKSpriteNode *pressureBarView ;
 @property (nonatomic,retain) SKLabelNode *scoreLabel;
+@property (nonatomic,retain) SKLabelNode *otherScoreLabelNode;
 @property (nonatomic,retain) SKScene *masterScene;
-
 @end

@@ -10,30 +10,18 @@
 #import <AVFoundation/AVFoundation.h>
 #import "GCHelper.h"
 #import "NetworkHelper.h"
-
-typedef enum{
-    SINGLE_PLAYER,
-    MULTIPLAYER
-}PlayerMode;
-
-typedef enum{
-    DEATHMATCH,
-    LONGEST
-}GameMode;
+#import "GameScene.h"
+#import <iAd/iAd.h>
 
 
-
-
-@interface MenuScene : SKScene<GCHelperDelegate>{
-    PlayerMode playerMode;
-    GameMode gameMode;
-    MultiplayerType multiplayerType;
-
+@interface MenuScene : SKScene<GCHelperDelegate,ADBannerViewDelegate>{
+    
+    
+    
 }
 @property BOOL contentCreated;
-
-
+@property(strong,nonatomic) GameScene *gameScene;
+@property (strong,nonatomic)ADBannerView *bannerView;
 - (void)setParentVC:(UIViewController*)aVC;
 - (UIViewController*)parentVC;
-
 @end

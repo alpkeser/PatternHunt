@@ -24,7 +24,9 @@ typedef enum {
     kMessageTypeRandomNumber = 0,
     kMessageTypeGameBegin,
     kMessageTypeScoreUpdate,
-    kMessageTypeGameOver
+    kMessageTypeGameOver,
+    kMessageTypeColorCodes,
+    kMessageTypePoints
 } MessageType;
 
 typedef struct {
@@ -35,6 +37,15 @@ typedef struct {
     Message message;
     uint32_t randomNumber;
 } MessageRandomNumber;
+typedef struct {
+    Message message;
+    int colorCodes[10][300];
+} MessageColorCodes;
+
+typedef struct {
+    Message message;
+    int points;
+} MessagePoints;
 
 typedef struct {
     Message message;
@@ -51,14 +62,11 @@ typedef struct {
 } MessageGameOver;
 
 @interface NetworkHelper : NSObject{
-    uint32_t ourRandom;
-    BOOL receivedRandom;
-    BOOL isServer;
-    NSString *otherPlayerID;
+    
 }
+@property(assign,nonatomic)uint32_t ourRandom;
+@property(assign,nonatomic)BOOL receivedRandom;
+@property(assign,nonatomic)BOOL isServer;
+@property(strong,nonatomic)NSString *otherPlayerID;
 
-typedef enum{
-    SERVER,
-    CLIENT
-}MultiplayerType;
 @end

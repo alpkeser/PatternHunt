@@ -21,6 +21,7 @@
 @property (nonatomic,retain) NSMutableArray *tilePattern; //multi icin geldi..onceden belirlenmis pattern
 
 - (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running;
+- (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running andColorCodes:(int[300])colorCodes;
 - (PHTile*)generateRandomTile;
 - (void)sendNewTile:(SKScene*)aScene;
 - (BOOL)shouldSendNewTile;

@@ -7,10 +7,14 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
-#import "ScoreboardView.h"
 #import "ScoreBoardNode.h"
-@interface GameScene : SKScene{
-    NSMutableArray *factories;
+#import "GCHelper.h"
+typedef  enum{
+    SINGLE = 0,
+    MULTIPLAYER
+}GameType;
+@interface GameScene : SKScene<GCHelperDelegate>{
+    
     NSMutableArray *selectedTiles;
     NSMutableArray *touchesStack;
     BOOL isSceneStopped;
@@ -23,5 +27,13 @@
 
 }
 @property BOOL contentCreated;
--(void)endGame;
+@property (strong,nonatomic)NSMutableArray *factories;
+@property (strong,nonatomic)SKShapeNode *fingerTrace;
+@property (strong,nonatomic)NSMutableArray *traces;
+@property (assign,nonatomic)GameType gameType;
+@property (assign,nonatomic)BOOL isFinished;
+@property (assign,nonatomic)BOOL isPaused;
+- (NSMutableArray*)setupFactoriesWithFrame:(CGRect)aFrame;
+- (void)setFactoriesFromColorCodes:(int[10][300])colorCodes andWithFrame:(CGRect)aFrame;
+- (void)endGame;
 @end

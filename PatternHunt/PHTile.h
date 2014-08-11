@@ -14,8 +14,7 @@ typedef enum{
     JOKER,
     REVERSER
 }TileType;
-@interface PHTile : SKSpriteNode{
-    TileType tileType;
+@interface PHTile : SKSpriteNode<NSCoding>{
 }
 
 

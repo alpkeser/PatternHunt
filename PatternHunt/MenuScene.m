@@ -7,8 +7,8 @@
 //
 
 #import "MenuScene.h"
-#import "GameScene.h"
 #import "AppDelegate.h"
+#import "PHTileFactory.h"
 #define kSingleButtonYPosition 0.70
 #define kDuelButtonYPosition 0.60
 #define kLeaderboardsButtonYPosition 0.50
@@ -25,6 +25,12 @@ UIViewController const *parentVC;
                                              selector:@selector(findMatch)
                                                  name:kGameCenterLoggedIn
                                                object:nil];
+    //add banner
+    self.bannerView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
+    [self.bannerView setFrame:CGRectMake(0, self.view.frame.size.height - self.bannerView.frame.size.height, 0,0)];
+    [self.view addSubview:self.bannerView];
+    [self.bannerView setAlpha:0.0f];
+    [self.bannerView setDelegate:self];
 
 }
 - (void)createSceneContents{
@@ -91,46 +97,36 @@ UIViewController const *parentVC;
         return;
     
     if ([[helloNode name] isEqualToString:@"singleNode"]) {
-        playerMode = SINGLE_PLAYER;
+        _gameScene = [[GameScene alloc] initWithSize:self.size];
+        [_gameScene setGameType:SINGLE];
+        [_gameScene setFactories:[_gameScene setupFactoriesWithFrame:self.view.frame]];
         [self startGame:helloNode];
 //        [self showGameModePanel];
         return;
     }
     UIAlertView *alert;
     if ([[helloNode name] isEqualToString:@"duelNode"]) {
-        playerMode = MULTIPLAYER;
         if ([[GKLocalPlayer localPlayer] isAuthenticated]) {
             [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(startDuel) name:kGameCenterStartDuel object:nil];
+            _gameScene = [[GameScene alloc] initWithSize:self.size];
+            [_gameScene setGameType:MULTIPLAYER];
+            [[[GCHelper sharedInstance] networkHelper] setOurRandom:arc4random()];
             [self findMatch];
-            //adam bulunca maci baslat
+            
             
         }else{
             alert = [[UIAlertView alloc] initWithTitle:@"Sorry" message:@"Wait a second to connect to gamecenter.. Then try again!!" delegate:nil cancelButtonTitle:@"Allright" otherButtonTitles: nil];
             [alert show];
         }
 
-//        [self showGameModePanel];
+
         return;
     }
     
     if ([[helloNode name] isEqualToString:@"leaderboardNode"]) {
         [self showLeaderboard];
+        return;
     }
-    
-    
-    
-
-//    if ([[helloNode name] isEqualToString:@"deatmatchNode"]) {
-//        gameMode = DEATHMATCH;
-//
-//        
-//    }
-//    if ([[helloNode name] isEqualToString:@"longestNode"]) {
-//        gameMode = LONGEST;
-//
-//        
-//    }
-//
 
     
 }
@@ -179,10 +175,10 @@ UIViewController const *parentVC;
     SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
     SKAction *remove = [SKAction removeFromParent];
     SKAction *seq = [SKAction sequence:@[moveup,zoom,pause,fadeAway,remove]];
+    [self hideBanner];
     [aNode runAction:seq completion:^{
-        SKScene *gameScene = [[GameScene alloc] initWithSize:self.size];
         SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
-        [self.view presentScene:gameScene transition:doors];
+        [self.view presentScene:_gameScene transition:doors];
     }];
 }
 - (void)startDuel{
@@ -194,15 +190,6 @@ UIViewController const *parentVC;
 
 
 #pragma mark - network methods
-
-- (void)sendRandomNumber {
-    
-    MessageRandomNumber message;
-    message.message.messageType = kMessageTypeRandomNumber;
-    message.randomNumber = arc4random();
-    NSData *data = [NSData dataWithBytes:&message length:sizeof(MessageRandomNumber)];
-    [self sendData:data];
-}
 - (void)sendData:(NSData *)data {
     NSError *error;
     BOOL success = [[GCHelper sharedInstance].match sendDataToAllPlayers:data withDataMode:GKMatchSendDataReliable error:&error];
@@ -210,6 +197,48 @@ UIViewController const *parentVC;
         NSLog(@"Error sending init packet");
         [self matchEnded];
     }
+}
+
+- (void)sendRandomNumber {
+    
+    MessageRandomNumber message;
+    message.message.messageType = kMessageTypeRandomNumber;
+    message.randomNumber = [[[GCHelper sharedInstance] networkHelper] ourRandom];
+    NSData *data = [NSData dataWithBytes:&message length:sizeof(MessageRandomNumber)];
+    [self sendData:data];
+}
+
+- (void)numbersRecieved{
+    if ([[[GCHelper sharedInstance] networkHelper] isServer]) {
+        //generate tiles and send
+        assert(_gameScene != nil);
+        NSMutableArray *serverFactories = [_gameScene setupFactoriesWithFrame:self.view.frame];
+        [self sendFactories:serverFactories];
+        [_gameScene setFactories:serverFactories];
+        
+    }
+    //add preparing match scene
+}
+
+
+- (void)sendFactories:(NSMutableArray*)someFactories{
+    
+    MessageColorCodes message;
+    message.message.messageType = kMessageTypeColorCodes;
+   [self colorArray:message.colorCodes fromFactories:someFactories];
+
+    NSData *data = [NSData dataWithBytes:&message length:sizeof(MessageColorCodes)];
+    [self sendData:data];
+        [self startGame:[self childNodeWithName:@"duelNode"]];
+}
+
+- (void)factoriesRecieved:(NSMutableArray*)someFactories{
+    [_gameScene setFactories:someFactories];
+    [self startGame:[self childNodeWithName:@"duelNode"]];
+}
+- (void)colorCodesRecieved:(int[10][300])someColorCodes{
+    [_gameScene setFactoriesFromColorCodes:someColorCodes andWithFrame:self.view.frame];
+        [self startGame:[self childNodeWithName:@"duelNode"]];
 }
 
 #pragma mark GCHelperDelegate
@@ -272,5 +301,94 @@ UIViewController const *parentVC;
 
 - (void)setParentVC:(UIViewController*)aVC{
     parentVC = aVC;
+}
+
+- (void)colorArray:(int[10][300])aColorArray fromFactories:(NSMutableArray*)someFactories{
+    for (int sayac1 = 0; sayac1<10; sayac1++) {
+        for (int sayac2 = 0; sayac2<300; sayac2++) {
+            aColorArray[sayac1][sayac2]= [(NSNumber*)[[(PHTileFactory*)[someFactories objectAtIndex:sayac1] tilePattern] objectAtIndex:sayac2] intValue];
+        }
+    }
+}
+
+#pragma mark - iAd Delegate Methods
+/*!
+ * @method bannerViewWillLoadAd:
+ *
+ * @discussion
+ * Called when a banner has confirmation that an ad will be presented, but
+ * before the resources necessary for presentation have loaded.
+ */
+- (void)bannerViewWillLoadAd:(ADBannerView *)banner  NS_AVAILABLE_IOS(5_0){
+    
+}
+
+/*!
+ * @method bannerViewDidLoadAd:
+ *
+ * @discussion
+ * Called each time a banner loads a new ad. Once a banner has loaded an ad, it
+ * will display it until another ad is available.
+ *
+ * It's generally recommended to show the banner view when this method is called,
+ * and hide it again when bannerView:didFailToReceiveAdWithError: is called.
+ */
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner{
+    [UIView animateWithDuration:1.0 animations:^(void){
+       //set alpha to 1
+        [self.bannerView setAlpha:1.0f];
+    }];
+}
+
+/*!
+ * @method bannerView:didFailToReceiveAdWithError:
+ *
+ * @discussion
+ * Called when an error has occurred while attempting to get ad content. If the
+ * banner is being displayed when an error occurs, it should be hidden
+ * to prevent display of a banner view with no ad content.
+ *
+ * @see ADError for a list of possible error codes.
+ */
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
+    [self hideBanner];
+}
+
+/*!
+ * @method bannerViewActionShouldBegin:willLeaveApplication:
+ *
+ * Called when the user taps on the banner and some action is to be taken.
+ * Actions either display full screen content modally, or take the user to a
+ * different application.
+ *
+ * The delegate may return NO to block the action from taking place, but this
+ * should be avoided if possible because most ads pay significantly more when
+ * the action takes place and, over the longer term, repeatedly blocking actions
+ * will decrease the ad inventory available to the application.
+ *
+ * Applications should reduce their own activity while the advertisement's action
+ * executes.
+ */
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave{
+    
+    return YES;
+}
+
+/*!
+ * @method bannerViewActionDidFinish:
+ *
+ * Called when a modal action has completed and control is returned to the
+ * application. Games, media playback, and other activities that were paused in
+ * bannerViewActionShouldBegin:willLeaveApplication: should resume at this point.
+ */
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner{
+    
+}
+
+- (void)hideBanner{
+    [UIView animateWithDuration:1.0 animations:^(void){
+        //set alpha to 1
+        [self.bannerView setAlpha:0.0f];
+    }];
 }
 @end

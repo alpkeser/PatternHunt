@@ -25,6 +25,22 @@
     return self;
     
 }
+
+- (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running andColorCodes:(int[300])colorCodes{
+    self = [super init];
+    aX = [PHProperties getTileFactoryXByOrder:anOrder inFrame:aFrame];
+    aY = [PHProperties getTileFactoryYInFrame:aFrame];
+    distance = [PHProperties getDistanceInFrame:aFrame];
+    factoryLevel = 3;//burda renk sayisi su an icin belli oluyor
+    tileSize = [PHProperties getTileSizeInFrame:aFrame];
+    myTiles = [[NSMutableArray alloc] init];
+    [self logVariables];
+    [self setIsRunning:running];
+    [self setOrder:anOrder];
+    [self initTilePatternWithColorCodes:colorCodes];
+    return self;
+    
+}
 -(PHTile*)generateRandomTile{
     int randomColorCode = arc4random() % factoryLevel;
     PHTile *returnTile = [[PHTile alloc] initWithImageNamed:[PHProperties getImageNameWithNumber:randomColorCode]];
@@ -53,6 +69,14 @@
     //    [returnTile runAction:[SKAction rotateByAngle:45.0f duration:0]]
     [returnTile setMyFactory:self];
     [returnTile setAlpha:1.0f];
+    
+    //alp
+//    SKCropNode* cropNode = [SKCropNode node];
+//    SKShapeNode* mask = [SKShapeNode node];
+//    [mask setPath:CGPathCreateWithRoundedRect(CGRectMake(-15, -15, 30, 30), 4, 4, nil)];
+//    [mask setFillColor:[SKColor whiteColor]];
+//    [cropNode setMaskNode:mask];
+//    [cropNode addChild:returnTile];
     return returnTile;
 }
 
@@ -167,4 +191,12 @@
         [tilePattern addObject:[NSNumber numberWithInt:(arc4random() % factoryLevel)]];
     }
 }
+- (void)initTilePatternWithColorCodes:(int[300])colorCodes{
+    tilePattern  = [[NSMutableArray alloc] init];
+    for (int sayac = 0; sayac<300; sayac++) {
+        [tilePattern addObject:[NSNumber numberWithInt:colorCodes[sayac]]];
+    }
+}
+
+
 @end

@@ -8,16 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import <GameKit/GameKit.h>
+#import "NetworkHelper.h"
 
 @protocol GCHelperDelegate
 extern NSString * const kGameCenterLoggedIn;
 extern NSString * const kGameCenterStartDuel;
+- (void)matchEnded;
+@optional
 - (void)prepareMatch;
 - (void)matchStarted;
-- (void)matchEnded;
 - (void)match:(GKMatch *)match didReceiveData:(NSData *)data
    fromPlayer:(NSString *)playerID;
+- (void)numbersRecieved;
+- (void)colorCodesRecieved:(int[10][300])someColorCodes;
+- (void)pointRecieved:(int)points;
 @end
+
 @interface GCHelper : NSObject <GKMatchmakerViewControllerDelegate, GKMatchDelegate,GKGameCenterControllerDelegate>{
     BOOL gameCenterAvailable;
     BOOL userAuthenticated;
@@ -40,6 +46,7 @@ extern NSString * const kGameCenterStartDuel;
 @property (retain) GKMatch *match;
 @property (assign) id <GCHelperDelegate> delegate;
 @property (retain) NSMutableDictionary *playersDict;
+@property (strong,nonatomic)NetworkHelper *networkHelper;
 + (GCHelper *)sharedInstance;
 - (void)authenticateLocalUser;
 

@@ -103,4 +103,35 @@ NSString const * isMuteKey = @"ISMUTE";
     return YES;
 
 }
+
+#pragma mark - Size Methods
++ (float)fontSizeForScoreBoard{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return 19.0f;
+    }else{
+        return 12.0f;
+    }
+}
+
++ (float)fontSizeForGameScene{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return 22.0f;
+    }else{
+        return 14.0f;
+    }
+}
++ (float)sizeForTraceStroke{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return 10.0f;
+    }else{
+        return 5.0f;
+    }
+}
++ (float)pauseButtonSize{
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return 30.0f;
+    }else{
+        return 20.0f;
+    }
+}
 @end
