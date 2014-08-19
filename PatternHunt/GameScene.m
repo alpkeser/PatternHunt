@@ -11,6 +11,14 @@
 #import "PHCorridor.h"
 #import "LevelManager.h"
 #import "SummaryScene.h"
+#import "MenuScene.h"
+
+
+#define kMenuButtonSizeRatio 0.15
+#define kGameOverButtonSizeRatio 0.10
+
+
+
 @implementation GameScene
 @synthesize contentCreated;
 #pragma mark - SKScene event methods
@@ -19,21 +27,25 @@
     [self setIsFinished:NO];
     [self setIsPaused:NO];
     [LevelManager initLevels];
+    [self setupCountDown];
     self.traces = [NSMutableArray new];
-    dispatch_after( dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        //code to be executed on the main queue after delay
-        [self increasePressure];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0),^(void){
+       self.nextGameScene = [[GameScene alloc] initWithSize:self.size];
     });
-    
+//    dispatch_after( dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+//        //code to be executed on the main queue after delay
+//        [self increasePressure];
+//    });
+//    
 
-    secondsLeft = 60.0;
+    secondsLeft = 15.0;
 //    [self setBackgroundColor:[UIColor colorWithRed:247.0f/255.0f green:175.0f/255.0f blue:29.0f/2555.0f alpha:1]];
-    [self setBackgroundColor:[UIColor blackColor]];
-//    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"bg.png"];
-//    SKShapeNode *shapeBgNode = [[SKShapeNode ]
-//    [bgNode setSize:self.size];
-//    [bgNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
-//    [self addChild:bgNode];   
+//    [self setBackgroundColor:[UIColor blackColor]];
+    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"background.png"];
+    [bgNode setSize:self.size];
+    [bgNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
+    [bgNode setZPosition:-5.0f];
+    [self addChild:bgNode];   
     isSceneStopped = NO;
     doesGameStarted = NO;
     if (_factories == nil) {
@@ -43,7 +55,7 @@
     
 //    PHCorridor *aCorridor = [[PHCorridor alloc] initWithOrder:1 withFrame:self.view.frame andScene:self andRunning:YES];
     //starting game after 2 secs.
-    double delayInSeconds = 2.0;
+    double delayInSeconds = 3.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         //code to be executed on the main queue after delay
@@ -112,17 +124,19 @@
     if ([self isFinished] || self.isPaused) {
         return;
     }
-//    if ([LevelManager checkLevel:self]) {
-//        [self showLevelUp];
-//    }
-//    int score = [scoreboardScene.scoreLabel.text intValue];
-//    score++;
-//    [scoreboardScene.scoreLabel setText: [NSString stringWithFormat:@"%i", score ]];
+
     if (isSceneStopped){
         for (UITouch *touch in touchesStack) {
-//            pos = [touch locationInView: [UIApplication sharedApplication].keyWindow];
+//            PHTile *aTile = (PHTile*)[self nodeAtPoint:[touch locationInNode:self]];
+            NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
+            for (SKNode *tempNode in nodes) {
+                if ([tempNode isKindOfClass:[PHTile class]] && ![(PHTile*)tempNode isSelected]) {
+                   [self selectTile:(PHTile*)tempNode];
+                }
+            }
+            
               pos = [touch locationInView: self.view];
-            [self processTouchWithX:pos.x andAY:pos.y]; //-aalpk
+//            [self processTouchWithX:pos.x andAY:pos.y]; //-aalpk
 //            [self selectTile:(PHTile*)[self nodeAtPoint:pos]];
         }
     }else{
@@ -138,9 +152,123 @@
     
 }
 
+- (void)runFactory{
+    CGPoint pos;
+    if ([self isFinished] || self.isPaused) {
+        return;
+    }
+    
+    if (isSceneStopped){
+        for (UITouch *touch in touchesStack) {
+            //            PHTile *aTile = (PHTile*)[self nodeAtPoint:[touch locationInNode:self]];
+            NSArray *nodes = [self nodesAtPoint:[touch locationInNode:self]];
+            for (SKNode *tempNode in nodes) {
+                if ([tempNode isKindOfClass:[PHTile class]] && ![(PHTile*)tempNode isSelected]) {
+                    [self selectTile:(PHTile*)tempNode];
+                }
+            }
+            
+            pos = [touch locationInView: self.view];
+            //            [self processTouchWithX:pos.x andAY:pos.y]; //-aalpk
+            //            [self selectTile:(PHTile*)[self nodeAtPoint:pos]];
+        }
+    }else{
+        PHTileFactory *aTileFactory = [_factories objectAtIndex:0];//temp aalpk
+        if ([aTileFactory shouldSendNewTile]) {
+            for (PHTileFactory *tileFac in _factories) {
+                [tileFac sendNewTile:self];
+            }
+        }
+        
+    }
+ 
+}
+#pragma mark - begining animations
+
+- (void)setupCountDown{
+    SKSpriteNode *blackSurface = [[ SKSpriteNode alloc] initWithColor:[UIColor blackColor] size:self.size];
+    [blackSurface setZPosition:2.0f];
+    [blackSurface setAlpha:0.6f];
+    [blackSurface setSize:self.size];
+    [blackSurface setPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
+    [blackSurface setName:@"blackSurfaceNode"];
+    [self addChild:blackSurface];
+    [self countDown:3];
+    [self performSelector:@selector(removeBlackSurface) withObject:nil afterDelay:3.0f];
+    //we have 3 sec in total 4 label 3,2,1,go so 0.75 for each duration
+//        [self performSelector:@selector(countDown) withObject:nil afterDelay:0.75];
+    
+    
+    
+}
+- (void)countDown:(int)newValue{
+    SKNode *blackSurface = [self childNodeWithName:@"blackSurfaceNode"];
+    SKLabelNode *countDownNode = [SKLabelNode labelNodeWithFontNamed:@"CarterOne"];
+    if (newValue<=0) {
+        [countDownNode setText:@"Go!!"];
+    }else{
+        [countDownNode setText:[NSString stringWithFormat:@"%i" , newValue]];
+    }
+    
+    [countDownNode setFontSize:[PHProperties fontSizeForGameScene]];
+    [countDownNode setPosition:CGPointMake(0, 0)];
+//    [countDownNode setName:@"countDownNode"];
+    [blackSurface addChild:countDownNode];
+
+
+    SKAction *moveup = [SKAction moveByX:0 y:50 duration:0.2];
+    SKAction *zoom = [SKAction scaleTo:2.0 duration:0.2];
+    SKAction *pause = [SKAction waitForDuration:0.1];
+    SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
+    newValue--;
+    [countDownNode runAction:[SKAction sequence:@[moveup,zoom,pause,fadeAway]] completion:^(void){
+        [countDownNode removeFromParent];
+        if (newValue>=0) {
+            [self countDown:newValue];
+        
+        }else{
+
+        }
+    }];
+    
+}
+
+- (void)removeBlackSurface{
+    SKAction *fadeAway = [SKAction fadeAlphaTo:0 duration:0.4];
+    SKNode *node = [self childNodeWithName:@"blackSurfaceNode"];
+    [node runAction:fadeAway completion:^(void){
+        [node removeFromParent];
+    }];
+}
+
 #pragma mark - touch delegates
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    if (!doesGameStarted || self.isFinished) {
+
+    if (!doesGameStarted ) {
+        return;
+    }
+    if (self.isPaused || self.isFinished) {
+        if ( [[(SKNode*)[self nodeAtPoint:[(UITouch*)[touches anyObject] locationInNode:self]] name] isEqualToString:@"playButtonNode"] ) {
+            if (self.gameType == SINGLE) {
+                [self setIsPaused:NO];
+                [self runScene];
+                [self removePauseMenu];
+                return;
+            }
+            
+        }else if ([[(SKNode*)[self nodeAtPoint:[(UITouch*)[touches anyObject] locationInNode:self]] name] isEqualToString:@"restartButtonNode"]){
+            SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
+            [self.view presentScene:self.nextGameScene transition:doors];
+
+        }else if ([[(SKNode*)[self nodeAtPoint:[(UITouch*)[touches anyObject] locationInNode:self]] name] isEqualToString:@"quitButtonNode"]){
+            SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:1];
+            
+            MenuScene *menuScene = [[MenuScene alloc ] initWithSize:self.size];
+            //    [scoreView removeFromSuperview];
+            [self.view presentScene:menuScene transition:doors];
+            
+        }
+        
         return;
     }
     if ( [[(SKNode*)[self nodeAtPoint:[(UITouch*)[touches anyObject] locationInNode:self]] name] isEqualToString:@"pauseButtonNode"] ) {
@@ -148,10 +276,14 @@
             [self setIsPaused:YES];
             [self stopScene];
             [self showPauseMenu];
+            return;
         }
         
     }
-    [self traceBeginFromPoint:[[touches allObjects] objectAtIndex:0]];
+    if (!self.fingerTrace) {
+            [self traceBeginFromPoint:[[touches allObjects] objectAtIndex:0]];
+    }
+
     int touchId = arc4random();
     while (randomTouchId == touchId) {
         touchId = arc4random();
@@ -170,7 +302,7 @@
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
-    if (!doesGameStarted || self.isFinished) {
+    if (!doesGameStarted || self.isFinished || self.isPaused) {
         return;
     }
     NSArray *allTouches = [touches allObjects];
@@ -191,7 +323,7 @@
 }
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     
-    if (!doesGameStarted || self.isFinished) {
+    if (!doesGameStarted || self.isFinished || self.isPaused) {
         return;
     }
 
@@ -264,6 +396,7 @@
 //    [self.fingerTrace removeFromParent];
     [self.fingerTrace setZPosition:-1.0f];
     [self.fingerTrace setAlpha:0.1f];
+    self.fingerTrace = nil;
 //    [self insertChild:self.fingerTrace atIndex:self.children.count-1];
     
     
@@ -292,6 +425,20 @@
 //    SKShapeNode 
 }
 #pragma mark - custom code
+- (void)updateCounter{
+    if (self.isPaused) {
+        return;
+    }
+    //    [self runFactory];
+    secondsLeft = secondsLeft - 0.1f ;
+    if (secondsLeft < 0.0f) {
+        [timer invalidate];
+        [self endGame];
+        return;
+    }
+    SKLabelNode *timeNode = (SKLabelNode*)[scoreboardNode childNodeWithName:@"timeNode"];
+    [timeNode setText:[NSString stringWithFormat:@"%.01f seconds",secondsLeft]];
+}
 
 - (void)processTouchWithX:(float)aX andAY:(float)aY{
 //
@@ -357,7 +504,16 @@
 //    [aTile runAction:[SKAction repeatActionForever:[SKAction sequence:@[[SKAction moveBy:CGVectorMake(+1, 0) duration:0.3]]]]];
 //    [aTile setFillColor:[UIColor blackColor]];
     [aTile setIsSelected:YES];
+    //trace color check
+
+    if (selectedTiles.count > 0) {
+        PHTile * lastTile = (PHTile*)[selectedTiles lastObject];
+        if (lastTile.orginalColorCode != aTile.orginalColorCode) {
+            [self.fingerTrace setStrokeColor:[UIColor   redColor]];
+        }
+    }
     [selectedTiles addObject:aTile];
+    
 }
 
 - (void)stopScene{
@@ -373,7 +529,7 @@
 }
 - (void)runScene{
 
-    if (!isSceneStopped) {
+    if (!isSceneStopped || self.isPaused) {
         return;
     }
         isSceneStopped = NO;
@@ -468,13 +624,36 @@
 //    [self setBackgroundColor:[UIColor blueColor]];
     [[self view]addSubview: aView];
 }
-
+#pragma mark - Pause Menu
 - (void) showPauseMenu{
-    SKSpriteNode *menuBackgroundNode = [[SKSpriteNode alloc] initWithImageNamed:@"orange_tile.png"];
+    SKSpriteNode *menuBackgroundNode = [[SKSpriteNode alloc] initWithImageNamed:@"pauseMenu.png"];
     [menuBackgroundNode  setSize:CGSizeMake(self.frame.size.width * 0.8, self.frame.size.width * 0.4)];
     [menuBackgroundNode setPosition:CGPointMake(self.frame.size.width * 0.5, self.frame.size.height * 0.7 )];
+    [menuBackgroundNode setName:@"pauseMenuNode"];
     [self addChild:menuBackgroundNode];
     
+    //0.955 more height
+    SKSpriteNode *playNode = [[SKSpriteNode alloc] initWithImageNamed:@"playButton.png"];
+    [playNode setSize:CGSizeMake(menuBackgroundNode.size.width * kMenuButtonSizeRatio, menuBackgroundNode.size.width * kMenuButtonSizeRatio * 0.955)];
+    [playNode setPosition:CGPointMake(menuBackgroundNode.size.width * -0.25, -menuBackgroundNode.size.height * 0.10)];//CGRectGetMidY(menuBackgroundNode.frame
+    [playNode setName:@"playButtonNode"];
+    [menuBackgroundNode addChild:playNode];
+    
+    SKSpriteNode *restartNode = [[SKSpriteNode alloc] initWithImageNamed:@"restartButton.png"];
+    [restartNode setSize:CGSizeMake(menuBackgroundNode.size.width * kMenuButtonSizeRatio, menuBackgroundNode.size.width * kMenuButtonSizeRatio * 0.955)];
+    [restartNode setPosition:CGPointMake(0, 0)];
+    [restartNode setName:@"restartButtonNode"];
+    [menuBackgroundNode addChild:restartNode];
+    
+    SKSpriteNode *quitNode = [[SKSpriteNode alloc] initWithImageNamed:@"menuButton.png"];
+    [quitNode setSize:CGSizeMake(menuBackgroundNode.size.width * kMenuButtonSizeRatio, menuBackgroundNode.size.width * kMenuButtonSizeRatio * 0.955)];
+    [quitNode setPosition:CGPointMake(menuBackgroundNode.size.width * +0.25, -menuBackgroundNode.size.height * 0.10)];
+    [quitNode setName:@"quitButtonNode"];
+    [menuBackgroundNode addChild:quitNode];
+}
+
+- (void)removePauseMenu{
+    [[self childNodeWithName:@"pauseMenuNode"] removeFromParent];
 }
 
 #pragma mark - Game End Methods
@@ -525,7 +704,8 @@
             
         }
         dispatch_async(dispatch_get_main_queue(), ^(void){
-            [self showBestPatternWithWinnerTrace:winnerTrace];
+//            [self showBestPatternWithWinnerTrace:winnerTrace];
+            [self showGameOverPanel];
         });
     });
     float timeUnit = 3.0f  / self.traces.count;
@@ -553,7 +733,140 @@
     
 }
 
+- (void)showGameOverPanel{
+    SKSpriteNode *blackSurface = [[ SKSpriteNode alloc] initWithColor:[UIColor blackColor] size:self.size];
+    [blackSurface setZPosition:2.0f];
+    [blackSurface setAlpha:0.6f];
+    [blackSurface setSize:self.size];
+    [blackSurface setPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))];
+    [blackSurface setName:@"blackSurfaceNode"];
+    [self addChild:blackSurface];
+    SKSpriteNode *gameOverPanel = [[SKSpriteNode alloc] initWithImageNamed:@"gameover.png"];
+    //ratio is 1.803
+    [gameOverPanel setSize:CGSizeMake(self.frame.size.width * 0.8, self.frame.size.width * 0.8 / 1.803)];
+    [gameOverPanel setPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + blackSurface.frame.size.height * 0.1)];
+    [gameOverPanel setZPosition:5.0f];
+    [gameOverPanel setName:@"gameOverPanel"];
+    [self addChild:gameOverPanel];
+    
+    //pane stuffs
+    //total point
+    SKLabelNode *totalPointsLabel = [[SKLabelNode alloc] initWithFontNamed:@"CarterOne"];
+    [totalPointsLabel setFontSize:[PHProperties fontSizeForGameScene]];
+    [totalPointsLabel setPosition:CGPointMake(0, gameOverPanel.frame.size.height * -0.10)];
+    [totalPointsLabel setText:[NSString stringWithFormat:@"Total Score: %i",[scoreboardNode.scoreLabel.text intValue]]];
+    [gameOverPanel addChild:totalPointsLabel];
+    //Longest
+    SKLabelNode *longestPatternLabel = [[SKLabelNode alloc] initWithFontNamed:@"CarterOne"];
+    [longestPatternLabel setFontSize:[PHProperties fontSizeForGameScene]];
+    [longestPatternLabel setPosition:CGPointMake(0, gameOverPanel.frame.size.height * -0.30)];
+    [longestPatternLabel setText:[NSString stringWithFormat:@"Longest Pattern: %i",[scoreboardNode.scoreLabel.text intValue]]];
+    [gameOverPanel addChild:longestPatternLabel];
+    
+    //stars
+    
+    //first empty stars
+    SKSpriteNode *leftEmptyStar = [[SKSpriteNode alloc] initWithImageNamed:@"leftStarEmpty.png"];
+    //lets say
+    [leftEmptyStar setSize:CGSizeMake(gameOverPanel.frame.size.width * 0.08, gameOverPanel.frame.size.width * 0.08)];
+    [leftEmptyStar setPosition:CGPointMake(-gameOverPanel.frame.size.width * 0.15, gameOverPanel.frame.size.height* 0.08)];
+    [gameOverPanel addChild:leftEmptyStar];
+    
+    SKSpriteNode *centerEmptyStar = [[SKSpriteNode alloc] initWithImageNamed:@"centerStarEmpty.png"];
+    [centerEmptyStar setSize:CGSizeMake(gameOverPanel.frame.size.width * 0.1, gameOverPanel.frame.size.width * 0.1)];
+    [centerEmptyStar setPosition:CGPointMake(0, gameOverPanel.frame.size.height* 0.12)];
+    [gameOverPanel addChild:centerEmptyStar];
+    
+    SKSpriteNode *rightEmptyStar = [[SKSpriteNode alloc] initWithImageNamed:@"rightStarEmpty.png"];
+    [rightEmptyStar  setSize:CGSizeMake(gameOverPanel.frame.size.width * 0.08, gameOverPanel.frame.size.width * 0.08)];
+    
+    [rightEmptyStar setPosition:CGPointMake(+gameOverPanel.frame.size.width * 0.15, gameOverPanel.frame.size.height* 0.08)];
+    [gameOverPanel addChild:rightEmptyStar];
+    [self performSelector:@selector(playLeftStarAnimation) withObject:nil afterDelay:0.3f];
+    
+    //buttons
+    SKSpriteNode *restartNode = [[SKSpriteNode alloc] initWithImageNamed:@"restartButton.png"];
+    [restartNode setSize:CGSizeMake(gameOverPanel.size.width * kGameOverButtonSizeRatio, gameOverPanel.size.width * kGameOverButtonSizeRatio * 0.955)];
+    [restartNode setPosition:CGPointMake(-gameOverPanel.frame.size.width * 0.10, -gameOverPanel.frame.size.height * 0.45)];
+    [restartNode setName:@"restartButtonNode"];
+    [gameOverPanel addChild:restartNode];
+    
+    SKSpriteNode *quitNode = [[SKSpriteNode alloc] initWithImageNamed:@"menuButton.png"];
+    [quitNode setSize:CGSizeMake(gameOverPanel.size.width * kGameOverButtonSizeRatio, gameOverPanel.size.width * kGameOverButtonSizeRatio * 0.955)];
+    [quitNode setPosition:CGPointMake(gameOverPanel.size.width * +0.10, -gameOverPanel.size.height * 0.45)];
+    [quitNode setName:@"quitButtonNode"];
+    [gameOverPanel addChild:quitNode];
+    
+    
+    
+}
+
+- (void)playLeftStarAnimation{
+    //star animations
+    //todo add switch
+    SKSpriteNode *gameOverPanel = (SKSpriteNode*)[self childNodeWithName:@"gameOverPanel"];
+    if (!gameOverPanel) {
+        return;
+    }
+    SKSpriteNode *leftFullStar = [[SKSpriteNode alloc] initWithImageNamed:@"leftStarFull.png"];
+    [leftFullStar setSize:CGSizeMake(gameOverPanel.frame.size.width * 0.16, gameOverPanel.frame.size.width * 0.16)];
+    [leftFullStar setPosition:CGPointMake(-gameOverPanel.frame.size.width * 0.15, gameOverPanel.frame.size.height* 0.28)];
+    [leftFullStar   setAlpha:0.0f];
+    [gameOverPanel addChild:leftFullStar];
+    SKAction *scaleDown = [SKAction scaleTo:0.5 duration:0.3];
+    SKAction *moveDown = [SKAction moveToY:gameOverPanel.frame.size.height* 0.08 duration:0.3];
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1.0f duration:0.3];
+    SKAction *allActions = [SKAction group:@[scaleDown,moveDown,fadeIn]];
+    
+    [leftFullStar runAction:allActions completion:^(void){
+        [self performSelector:@selector(playCenterStarAnimation) withObject:nil afterDelay:0.2];
+    }];
+}
+
+- (void)playCenterStarAnimation{
+    //star animations
+    //todo add switch
+    SKSpriteNode *gameOverPanel = (SKSpriteNode*)[self childNodeWithName:@"gameOverPanel"];
+    if (!gameOverPanel) {
+        return;
+    }
+    SKSpriteNode *centerFullStar = [[SKSpriteNode alloc] initWithImageNamed:@"centerStarFull.png"];
+    [centerFullStar setSize:CGSizeMake(gameOverPanel.frame.size.width * 0.2, gameOverPanel.frame.size.width * 0.2)];
+    [centerFullStar setPosition:CGPointMake(0, gameOverPanel.frame.size.height* 0.32)];
+    [centerFullStar   setAlpha:0.0f];
+    [gameOverPanel addChild:centerFullStar];
+    SKAction *scaleDown = [SKAction scaleTo:0.5 duration:0.3];
+    SKAction *moveDown = [SKAction moveToY:gameOverPanel.frame.size.height* 0.12 duration:0.3];
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1.0f duration:0.3];
+    SKAction *allActions = [SKAction group:@[scaleDown,moveDown,fadeIn]];
+    
+    [centerFullStar runAction:allActions completion:^(void){
+        [self performSelector:@selector(playRightStarAnimation) withObject:nil afterDelay:0.2];
+    }];
+}
+
+- (void)playRightStarAnimation{
+    //star animations
+    //todo add switch
+    SKSpriteNode *gameOverPanel = (SKSpriteNode*)[self childNodeWithName:@"gameOverPanel"];
+    if (!gameOverPanel) {
+        return;
+    }
+    SKSpriteNode *rightFullStar = [[SKSpriteNode alloc] initWithImageNamed:@"rightStarFull.png"];
+    [rightFullStar setSize:CGSizeMake(gameOverPanel.frame.size.width * 0.16, gameOverPanel.frame.size.width * 0.16)];
+    [rightFullStar setPosition:CGPointMake(+gameOverPanel.frame.size.width * 0.15, gameOverPanel.frame.size.height* 0.28)];
+    [rightFullStar   setAlpha:0.0f];
+    [gameOverPanel addChild:rightFullStar];
+    SKAction *scaleDown = [SKAction scaleTo:0.5 duration:0.3];
+    SKAction *moveDown = [SKAction moveToY:gameOverPanel.frame.size.height* 0.08 duration:0.3];
+    SKAction *fadeIn = [SKAction fadeAlphaTo:1.0f duration:0.3];
+    SKAction *allActions = [SKAction group:@[scaleDown,moveDown,fadeIn]];
+    
+    [rightFullStar runAction:allActions];
+}
 -(void)showBestPatternWithWinnerTrace:(SKShapeNode*)winnerTrace{
+    int numberOfTiles = [(NSNumber*)winnerTrace.userData[@"numberOfTiles"] intValue];
+//    int points = pow(2, numberOfTiles);
     //fonts
     SKLabelNode *bestpatternLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     SKLabelNode *bestpatternCountLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
@@ -562,7 +875,7 @@
     [bestpatternCountLabel setText:[NSString stringWithFormat:@"%@ Tiles",(NSNumber*)winnerTrace.userData[@"numberOfTiles"]]];
     //positions
     [bestpatternLabel setPosition:CGPointMake(CGRectGetMidX(self.frame)-self.frame.size.width*0.10,CGRectGetMidY(self.frame)-self.frame.size.height * 0.05f)];
-    [bestpatternCountLabel setPosition:CGPointMake(bestpatternLabel.position.x + bestpatternLabel.frame.size.width * 0.75,bestpatternLabel.position.y - bestpatternLabel.frame.size.height )];
+    [bestpatternCountLabel setPosition:CGPointMake(bestpatternLabel.position.x + self.size.width * 0.10f,bestpatternLabel.position.y - bestpatternLabel.frame.size.height )];
     //sizes
     [bestpatternLabel setFontSize:[PHProperties fontSizeForGameScene]];
     [bestpatternCountLabel setFontSize:[PHProperties fontSizeForGameScene]+[PHProperties fontSizeForGameScene]* 0.5];
@@ -573,57 +886,14 @@
 }
 
 - (void)resumeToSummaryScreen{
-    SummaryScene *gameScene = [[SummaryScene alloc] initWithSize:self.size];
-    [gameScene setPoint:[scoreboardNode.scoreLabel.text floatValue]];
+    SummaryScene *summaryScene = [[SummaryScene alloc] initWithSize:self.size];
+    [summaryScene setPoint:[scoreboardNode.scoreLabel.text floatValue]];
     SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
-    [self.view presentScene:gameScene transition:doors];
+    [self.view presentScene:summaryScene transition:doors];
     
 }
 
-- (void)increasePressure{
-    //sabit var burda da
-    [LevelManager increasePressure:10];
-    dispatch_after( dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-        //code to be executed on the main queue after delay
-        [self increasePressure];
-    });
-}
 
-- (void)showLevelUp{
-    SKLabelNode *helloNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    [helloNode setText:[NSString stringWithFormat:@"Level %i",[LevelManager getLevel]] ];
-    [helloNode setFontSize:[PHProperties fontSizeForGameScene]];
-    [helloNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
-    [self addChild:helloNode];
-    
-    SKAction *moveup = [SKAction moveByX:0 y:50 duration:0.5];
-    SKAction *zoom = [SKAction scaleTo:2.0 duration:0.25];
-    SKAction *pause = [SKAction waitForDuration:0.5];
-        SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
-        SKAction *remove = [SKAction removeFromParent];
-        SKAction *seq = [SKAction sequence:@[moveup,zoom,pause,fadeAway,remove]];
-//    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause]];
-//    [helloNode runAction:seq completion:^{
-//        SummaryScene *gameScene = [[SummaryScene alloc] initWithSize:self.size];
-//        SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
-//        [self.view presentScene:gameScene transition:doors];
-//    }];
-
-}
-
-- (void)updateCounter{
-    if (self.isPaused) {
-        return;
-    }
-    secondsLeft = secondsLeft - 0.1f ;
-    if (secondsLeft < 0.0f) {
-        [timer invalidate];
-        [self endGame];
-        return;
-    }
-    SKLabelNode *timeNode = (SKLabelNode*)[scoreboardNode childNodeWithName:@"timeNode"];
-    [timeNode setText:[NSString stringWithFormat:@"%.01f seconds",secondsLeft]];
-}
 
 
 #pragma mark - GCHelper delegate methods
@@ -653,4 +923,81 @@
 }
 
 //just number of tiles, change the method for completion and make a new method for point calc.
+
+#pragma mark - iAd Delegate Methods
+
+- (void)bannerViewWillLoadAd:(ADBannerView *)banner  NS_AVAILABLE_IOS(5_0){
+    
+}
+
+- (void)bannerViewDidLoadAd:(ADBannerView *)banner{
+    //reposition the muteNode
+
+
+}
+
+- (void)bannerView:(ADBannerView *)banner didFailToReceiveAdWithError:(NSError *)error{
+    [self hideBanner];
+}
+
+- (BOOL)bannerViewActionShouldBegin:(ADBannerView *)banner willLeaveApplication:(BOOL)willLeave{
+    
+    return YES;
+}
+
+
+- (void)bannerViewActionDidFinish:(ADBannerView *)banner{
+    
+}
+
+- (void)hideBanner{
+    [UIView animateWithDuration:1.0 animations:^(void){
+        //set alpha to 1
+        [[self getBannerView] setAlpha:0.0f];
+    } completion:^(BOOL finished){
+        [[self getBannerView] removeFromSuperview];
+    }];
+}
+
+- (ADBannerView*)getBannerView{
+    for (UIView *tempView in self.view.subviews) {
+        if ([tempView isKindOfClass:[ADBannerView class]]) {
+            return (ADBannerView*)tempView;
+        }
+    }
+    return nil;
+}
+
+
+#pragma mark - not used methods
+- (void)increasePressure{
+    //sabit var burda da
+    [LevelManager increasePressure:10];
+    dispatch_after( dispatch_time(DISPATCH_TIME_NOW, 10 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+        //code to be executed on the main queue after delay
+        [self increasePressure];
+    });
+}
+
+- (void)showLevelUp{
+    SKLabelNode *helloNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    [helloNode setText:[NSString stringWithFormat:@"Level %i",[LevelManager getLevel]] ];
+    [helloNode setFontSize:[PHProperties fontSizeForGameScene]];
+    [helloNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
+    [self addChild:helloNode];
+    
+    SKAction *moveup = [SKAction moveByX:0 y:50 duration:0.5];
+    SKAction *zoom = [SKAction scaleTo:2.0 duration:0.25];
+    SKAction *pause = [SKAction waitForDuration:0.5];
+    SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
+    SKAction *remove = [SKAction removeFromParent];
+    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause,fadeAway,remove]];
+    //    SKAction *seq = [SKAction sequence:@[moveup,zoom,pause]];
+    //    [helloNode runAction:seq completion:^{
+    //        SummaryScene *gameScene = [[SummaryScene alloc] initWithSize:self.size];
+    //        SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
+    //        [self.view presentScene:gameScene transition:doors];
+    //    }];
+    
+}
 @end

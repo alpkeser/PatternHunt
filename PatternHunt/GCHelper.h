@@ -20,7 +20,7 @@ extern NSString * const kGameCenterStartDuel;
 - (void)match:(GKMatch *)match didReceiveData:(NSData *)data
    fromPlayer:(NSString *)playerID;
 - (void)numbersRecieved;
-- (void)colorCodesRecieved:(int[10][300])someColorCodes;
+- (void)colorCodesRecieved:(int[10][900])someColorCodes;
 - (void)pointRecieved:(int)points;
 @end
 

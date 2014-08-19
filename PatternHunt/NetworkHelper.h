@@ -39,7 +39,7 @@ typedef struct {
 } MessageRandomNumber;
 typedef struct {
     Message message;
-    int colorCodes[10][300];
+    int colorCodes[10][900];
 } MessageColorCodes;
 
 typedef struct {

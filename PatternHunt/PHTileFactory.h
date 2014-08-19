@@ -19,9 +19,10 @@
 @property (nonatomic,assign) BOOL isRunning;
 @property (nonatomic,retain) NSMutableArray *myTiles;
 @property (nonatomic,retain) NSMutableArray *tilePattern; //multi icin geldi..onceden belirlenmis pattern
+@property (nonatomic,retain) NSMutableArray *tileTypes; //multi icin geldi..pattern types
 
 - (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running;
-- (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running andColorCodes:(int[300])colorCodes;
+- (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running andColorCodes:(int[900])colorCodes;
 - (PHTile*)generateRandomTile;
 - (void)sendNewTile:(SKScene*)aScene;
 - (BOOL)shouldSendNewTile;

@@ -9,14 +9,24 @@
 #import "MenuScene.h"
 #import "AppDelegate.h"
 #import "PHTileFactory.h"
-#define kSingleButtonYPosition 0.70
-#define kDuelButtonYPosition 0.60
-#define kLeaderboardsButtonYPosition 0.50
+#define kSingleButtonYPosition 0.65
+#define kDuelButtonYPosition 0.55
+#define kLeaderboardsButtonYPosition 0.45
 @implementation MenuScene
 UIViewController const *parentVC;
 @synthesize contentCreated;
 
 - (void)didMoveToView:(SKView *)view{
+    //add banner
+    [self setBannerView:[self getBannerView]];
+    if (!self.bannerView) {
+    self.bannerView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
+        [self.bannerView setFrame:CGRectMake(0, self.view.frame.size.height - self.bannerView.frame.size.height, 0,0)];
+    [self.view addSubview:self.bannerView];
+    [self.bannerView setAlpha:0.0f];
+    
+    }
+    [self.bannerView setDelegate:self];
     if (!self.contentCreated) {
         [self createSceneContents];
     }
@@ -25,16 +35,12 @@ UIViewController const *parentVC;
                                              selector:@selector(findMatch)
                                                  name:kGameCenterLoggedIn
                                                object:nil];
-    //add banner
-    self.bannerView = [[ADBannerView alloc] initWithAdType:ADAdTypeBanner];
-    [self.bannerView setFrame:CGRectMake(0, self.view.frame.size.height - self.bannerView.frame.size.height, 0,0)];
-    [self.view addSubview:self.bannerView];
-    [self.bannerView setAlpha:0.0f];
-    [self.bannerView setDelegate:self];
+ 
+    
 
 }
 - (void)createSceneContents{
-    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"bg.png"];
+    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"background.png"];
     [bgNode setSize:self.size];
     [bgNode setPosition:CGPointMake(CGRectGetMidX(self.frame),CGRectGetMidY(self.frame))];
     [self addChild:bgNode];
@@ -42,7 +48,8 @@ UIViewController const *parentVC;
     [self addChild:[self singleNode]];
     [self addChild:[self duelNode]];
     [self addChild:[self leaderboardNode]];
-    [self addChild:[self settingsNode]];
+    [self addChild:[self muteNode]];
+    [self addLogo];
 //    for (int sayac = 0; sayac<200; sayac++) {
 //        [self testShapeNode];
 //    }
@@ -51,45 +58,63 @@ UIViewController const *parentVC;
     
 }
 
-- (SKLabelNode*)singleNode{
+- (SKSpriteNode*)singleNode{
+    /*
     SKLabelNode *singleNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
     [singleNode setText:@"Single"];
     [singleNode setFontSize:22];
+    [singleNode setPosition:CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height * kSingleButtonYPosition)];
+    [singleNode setName:@"singleNode"];
+     */
+    //ratio is 3.182
+    SKSpriteNode*singleNode = [[SKSpriteNode alloc] initWithImageNamed:@"singleButton.png"];
+    [singleNode setSize:CGSizeMake(self.size.width*0.30, self.size.width*0.30/3.182)];
     [singleNode setPosition:CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height * kSingleButtonYPosition)];
     [singleNode setName:@"singleNode"];
     return singleNode;
 }
 
 //Duel playing via gamecenter
-- (SKLabelNode*)duelNode{
-    SKLabelNode *duelNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    [duelNode setText:@"Duel"];
-    [duelNode setFontSize:22];
+- (SKSpriteNode*)duelNode{
+    SKSpriteNode *duelNode = [[SKSpriteNode alloc] initWithImageNamed:@"multiplayerButton.png"];
+    [duelNode setSize:CGSizeMake(self.size.width *0.30,self.size.width*0.30/3.182)];
     [duelNode setPosition:CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height * kDuelButtonYPosition)];
     [duelNode setName:@"duelNode"];
     return duelNode;
-
 }
 
 //Leaderboards button
-- (SKLabelNode*)leaderboardNode{
-    SKLabelNode *leaderboardNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
-    [leaderboardNode setText:@"Leaderboard"];
-    [leaderboardNode setFontSize:22];
+- (SKSpriteNode*)leaderboardNode{
+    SKSpriteNode *leaderboardNode = [[SKSpriteNode alloc] initWithImageNamed:@"leaderboardButton.png"];
+    [leaderboardNode setSize:CGSizeMake(self.size.width * 0.30, self.size.width * 0.30 /3.182)];
     [leaderboardNode setPosition:CGPointMake(CGRectGetMidX(self.frame),self.frame.size.height * kLeaderboardsButtonYPosition)];
     [leaderboardNode setName:@"leaderboardNode"];
     return leaderboardNode;
+}
+
+- (SKSpriteNode*)muteNode{
+    SKSpriteNode* muteNode = [[SKSpriteNode alloc] initWithImageNamed:@"muteOnButton.png"];
+    [muteNode setSize:CGSizeMake(self.frame.size.width * 0.10, self.frame.size.width * 0.10)];
+    if (self.bannerView.alpha >0) {
+    [muteNode setPosition:CGPointMake(self.frame.size.width * 0.9, self.frame.size.height *  0.05 + +  self.bannerView.frame.size.height)];
+    }else{
+    [muteNode setPosition:CGPointMake(self.frame.size.width * 0.9, self.frame.size.height *  0.05)];
+    }
+
+    [muteNode setName:@"muteNode"];
+    return muteNode;
     
 }
 
-- (SKSpriteNode*)settingsNode{
-    SKSpriteNode* settingsNode = [[SKSpriteNode alloc] initWithImageNamed:@"redTile.png"];
-    [settingsNode setSize:CGSizeMake(self.frame.size.width * 0.15, self.frame.size.height * 0.15)];
-    [settingsNode setPosition:CGPointMake(self.frame.size.width * 0.4, self.frame.size.height * - 0.4)];
-//    [muteNode setPosition:CGPointMake(0, 0)];
-    return settingsNode;
-    
+- (void)addLogo{
+    //ratio is 4.232
+    SKSpriteNode *logoNode= [[SKSpriteNode alloc] initWithImageNamed:@"headerLogo.png"];
+    [logoNode setSize:CGSizeMake(self.size.height * 0.50, self.size.height * 0.50 / 4.232)];
+    [logoNode setPosition:CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame)+self.size.height * 0.30)];
+    [self addChild:logoNode];
 }
+
+#pragma mark - Touch Methods
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 
     SKNode *helloNode = [self nodeAtPoint:[(UITouch*)[touches anyObject] locationInNode:self]] ;
@@ -169,13 +194,13 @@ UIViewController const *parentVC;
 
 
 - (void)startGame:(SKNode*)aNode{
-    SKAction *moveup = [SKAction moveByX:0 y:50 duration:0.5];
-    SKAction *zoom = [SKAction scaleTo:2.0 duration:0.25];
-    SKAction *pause = [SKAction waitForDuration:0.5];
+    SKAction *moveup = [SKAction moveByX:0 y:20 duration:0.3];
+    SKAction *zoom = [SKAction scaleTo:1.3 duration:0.1];
+    SKAction *pause = [SKAction waitForDuration:0.3];
     SKAction *fadeAway = [SKAction fadeInWithDuration:0.25];
     SKAction *remove = [SKAction removeFromParent];
     SKAction *seq = [SKAction sequence:@[moveup,zoom,pause,fadeAway,remove]];
-    [self hideBanner];
+//    [self hideBanner];
     [aNode runAction:seq completion:^{
         SKTransition *doors = [SKTransition doorsOpenVerticalWithDuration:0.5];
         [self.view presentScene:_gameScene transition:doors];
@@ -236,7 +261,7 @@ UIViewController const *parentVC;
     [_gameScene setFactories:someFactories];
     [self startGame:[self childNodeWithName:@"duelNode"]];
 }
-- (void)colorCodesRecieved:(int[10][300])someColorCodes{
+- (void)colorCodesRecieved:(int[10][900])someColorCodes{
     [_gameScene setFactoriesFromColorCodes:someColorCodes andWithFrame:self.view.frame];
         [self startGame:[self childNodeWithName:@"duelNode"]];
 }
@@ -303,9 +328,9 @@ UIViewController const *parentVC;
     parentVC = aVC;
 }
 
-- (void)colorArray:(int[10][300])aColorArray fromFactories:(NSMutableArray*)someFactories{
+- (void)colorArray:(int[10][900])aColorArray fromFactories:(NSMutableArray*)someFactories{
     for (int sayac1 = 0; sayac1<10; sayac1++) {
-        for (int sayac2 = 0; sayac2<300; sayac2++) {
+        for (int sayac2 = 0; sayac2<900; sayac2++) {
             aColorArray[sayac1][sayac2]= [(NSNumber*)[[(PHTileFactory*)[someFactories objectAtIndex:sayac1] tilePattern] objectAtIndex:sayac2] intValue];
         }
     }
@@ -334,6 +359,9 @@ UIViewController const *parentVC;
  * and hide it again when bannerView:didFailToReceiveAdWithError: is called.
  */
 - (void)bannerViewDidLoadAd:(ADBannerView *)banner{
+    //reposition the muteNode
+    SKSpriteNode *muteNode = (SKSpriteNode*)[self childNodeWithName:@"muteNode"];
+    [muteNode runAction:[SKAction moveTo:CGPointMake(muteNode.position.x, muteNode.position.y +  self.bannerView.frame.size.height) duration:0.8f]];
     [UIView animateWithDuration:1.0 animations:^(void){
        //set alpha to 1
         [self.bannerView setAlpha:1.0f];
@@ -389,6 +417,17 @@ UIViewController const *parentVC;
     [UIView animateWithDuration:1.0 animations:^(void){
         //set alpha to 1
         [self.bannerView setAlpha:0.0f];
+    } completion:^(BOOL finished){
+        [self.bannerView removeFromSuperview];
     }];
+}
+
+- (ADBannerView*)getBannerView{
+    for (UIView *tempView in self.view.subviews) {
+        if ([tempView isKindOfClass:[ADBannerView class]]) {
+            return (ADBannerView*)tempView;
+        }
+    }
+    return nil;
 }
 @end

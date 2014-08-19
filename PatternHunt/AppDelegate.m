@@ -17,24 +17,27 @@
     [[GCHelper sharedInstance] authenticateLocalUser];
     
     //add music
-//    [[AVAudioSession sharedInstance] setDelegate: self];
-//    NSError *setCategoryError = nil;
-//    [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
-//    [[AVAudioSession sharedInstance] setActive: YES error: &setCategoryError];
-//    
-//    if (setCategoryError)
-//        NSLog(@"Error setting category! %@", setCategoryError);
-//     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
-//    
-//    NSString *path = [[NSBundle mainBundle]pathForResource:@"patternMenuMusic" ofType:@"aif"];
-//    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
-//    [audioPlayer setNumberOfLoops:-1];
-//    [audioPlayer prepareToPlay];
-//    
+    [[AVAudioSession sharedInstance] setDelegate: self];
+    NSError *setCategoryError = nil;
+    [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error: &setCategoryError];
+    [[AVAudioSession sharedInstance] setActive: YES error: &setCategoryError];
+    
+    if (setCategoryError)
+        NSLog(@"Error setting category! %@", setCategoryError);
+     [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+    
+    NSString *path = [[NSBundle mainBundle]pathForResource:@"patternMenuMusic" ofType:@"aif"];
+    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path] error:NULL];
+    [audioPlayer setNumberOfLoops:-1];
+    [audioPlayer prepareToPlay];
+//
 //    if([audioPlayer play])
+//
+
     return YES;
 }
-							
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.

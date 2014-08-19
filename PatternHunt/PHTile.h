@@ -10,9 +10,10 @@
 #import <SpriteKit/SpriteKit.h>
 @class PHTileFactory;
 typedef enum{
-    NORMAL,
-    JOKER,
-    REVERSER
+    NORMAL = 0,
+    JOKER, //changing colors
+    REVERSER,
+    TIMEGAINER,
 }TileType;
 @interface PHTile : SKSpriteNode<NSCoding>{
 }
@@ -25,4 +26,5 @@ typedef enum{
 //@property (nonatomic,assign) TileType tileType;
 
 - (id)initWithImageNamed:(NSString *)name andTileType:(TileType)aTileType;
+- (void)changeColor;
 @end

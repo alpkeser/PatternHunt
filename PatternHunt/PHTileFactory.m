@@ -9,13 +9,14 @@
 #import "PHTileFactory.h"
 
 @implementation PHTileFactory
-@synthesize aX,aY,distance,factoryLevel,tileSize,myTiles,isRunning,order,tilePattern;
+@synthesize aX,aY,distance,factoryLevel,tileSize,myTiles,isRunning,order,tilePattern,tileTypes;
 - (id)initWithOrder:(int)anOrder inFrame:(CGRect)aFrame isRunning:(BOOL)running{
     self = [super init];
     aX = [PHProperties getTileFactoryXByOrder:anOrder inFrame:aFrame];
     aY = [PHProperties getTileFactoryYInFrame:aFrame];
     distance = [PHProperties getDistanceInFrame:aFrame];
-    factoryLevel = 3;//burda renk sayisi su an icin belli oluyor
+    factoryLevel = 4
+    ;//burda renk sayisi su an icin belli oluyor
     tileSize = [PHProperties getTileSizeInFrame:aFrame];
     myTiles = [[NSMutableArray alloc] init];
     [self logVariables];
@@ -51,6 +52,7 @@
 //    [returnTile runAction:[SKAction rotateByAngle:45.0f duration:0]]
     [returnTile setMyFactory:self];
     [returnTile setAlpha:1.0f];
+    [returnTile setTileType:[self getTileType]];
     return returnTile;
 }
 
@@ -62,6 +64,8 @@
     int randomColorCode = [(NSNumber*)[tilePattern objectAtIndex:0] intValue];
     [tilePattern removeObjectAtIndex:0];
     PHTile *returnTile = [[PHTile alloc] initWithImageNamed:[PHProperties getImageNameWithNumber:randomColorCode]];
+    [returnTile setTileType:[[self.tileTypes firstObject] intValue]];
+    [self.tileTypes removeObjectAtIndex:0];
     [returnTile setSize:CGSizeMake(tileSize, tileSize)];
     //    [returnTile setScale:0.40];
     [returnTile setIsSelected:NO];
@@ -116,7 +120,7 @@
 }
 
 -(void)logVariables{
-    NSLog(@" aX: %f aY: %f distance: %f",aX,aY,distance);
+//    NSLog(@" aX: %f aY: %f distance: %f",aX,aY,distance);
 }
 
 - (void)sendNewTile:(SKScene*)aScene{
@@ -186,16 +190,34 @@
 //onceden renk kodlarını tutan array init
 - (void)initTilePattern{
     tilePattern  = [[NSMutableArray alloc] init];
+    tileTypes  = [[NSMutableArray alloc] init];
     //300 yeterm?
-    for (int sayac = 0; sayac<300; sayac++) {
+    for (int sayac = 0; sayac<900; sayac++) {
         [tilePattern addObject:[NSNumber numberWithInt:(arc4random() % factoryLevel)]];
+        [tileTypes addObject:[NSNumber numberWithInt:[self getTileType]]];
     }
 }
 - (void)initTilePatternWithColorCodes:(int[300])colorCodes{
     tilePattern  = [[NSMutableArray alloc] init];
-    for (int sayac = 0; sayac<300; sayac++) {
+    for (int sayac = 0; sayac<900; sayac++) {
         [tilePattern addObject:[NSNumber numberWithInt:colorCodes[sayac]]];
     }
+}
+
+- (TileType)getTileType{
+    u_int32_t value = arc4random() % 10;
+    u_int32_t value2  = arc4random() % 10;
+    if (value2 <= 8) {
+        return NORMAL;
+    }
+    if (value <= 5) {
+        return TIMEGAINER;
+    }
+    if (value <=9) {
+        return JOKER;
+    }
+    
+    return REVERSER;
 }
 
 

@@ -8,6 +8,8 @@
 
 #import "ScoreBoardNode.h"
 #import "GameScene.h"
+
+#define kPauseButtonSizeRatio 0.05
 @implementation ScoreBoardNode
 @synthesize scoreLabel,pressureBarView,masterScene,otherScoreLabelNode;
 
@@ -20,33 +22,52 @@
     self = [super initWithColor:color size:size];
     if (self) {
         fontSize = [PHProperties fontSizeForScoreBoard];
+        [self addPanel];
         [self calculatePositions];
         [self addScoreBoard];
         [self addScore];
         [self addCounterLabel];
         [self addCounter];
-        
-        [self addOtherScore];
-        [self addOtherScoreLabel];
+        if (self.gameType == MULTIPLAYER) {
+            [self addOtherScore];
+            [self addOtherScoreLabel];
+
+        }
         [self addPauseButton];
         
     }
     return self;
 }
 
+- (id)initWithColor:(UIColor *)color size:(CGSize)size andGameType:(GameType)gameType{
+    self = [self initWithColor:color size:size];
+    [self setGameType:gameType];
+    return self;
+}
+
 - (void)calculatePositions{
     //yatay 10a boldum 1 gittim dikeyi 3e boldum en ustten 1 indim
-    timeLabelPosition = CGPointMake(- (self.frame.size.width/10) * 2 , (self.frame.size.height / 6) );
-    timePosition = CGPointMake(-(self.frame.size.width /10) * 2 , -self.frame.size.height / 6);
+    if (self.gameType == SINGLE) {
+        timeLabelPosition = CGPointMake(- (self.frame.size.width/10) * 2 , (self.frame.size.height / 6) );
+        timePosition = CGPointMake(-(self.frame.size.width /10) * 2 , -self.frame.size.height / 6);
+        
+        scoreLabelPosition = CGPointMake( (self.frame.size.width/10) * 2 , (self.frame.size.height / 6) );
+        scorePosition = CGPointMake((self.frame.size.width /10) * 2 , -self.frame.size.height / 6);
+
+    }else{
+        timeLabelPosition = CGPointMake(- (self.frame.size.width/10) * 3 , (self.frame.size.height / 6) );
+        timePosition = CGPointMake(-(self.frame.size.width /10) * 3 , -self.frame.size.height / 6);
+        
+        scoreLabelPosition = CGPointMake( (self.frame.size.width/10) * 0 , (self.frame.size.height / 6) );
+        scorePosition = CGPointMake((self.frame.size.width /10) * 0 , -self.frame.size.height / 6);
+        
+        otherScoreLabelPosition = CGPointMake( (self.frame.size.width/10) * 2.5 , (self.frame.size.height / 6) );
+        otherScorePosition = CGPointMake((self.frame.size.width /10) * 2.5 , -self.frame.size.height / 6);
+    }
     
-    scoreLabelPosition = CGPointMake( (self.frame.size.width/10) * 1 , (self.frame.size.height / 6) );
-    scorePosition = CGPointMake((self.frame.size.width /10) * 1 , -self.frame.size.height / 6);
-    
-    otherScoreLabelPosition = CGPointMake( (self.frame.size.width/10) * 3 , (self.frame.size.height / 6) );
-    otherScorePosition = CGPointMake((self.frame.size.width /10) * 3 , -self.frame.size.height / 6);
 }
 - (void)addScoreBoard{
-    SKLabelNode *scoreTextLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    SKLabelNode *scoreTextLabel = [SKLabelNode labelNodeWithFontNamed:@"CarterOne"];
     [scoreTextLabel setText:@"Score"];
     [scoreTextLabel setFontSize:fontSize];
     [scoreTextLabel setPosition:scoreLabelPosition];
@@ -57,7 +78,7 @@
 }
 
 - (void)addScore{
-    scoreLabel =[SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    scoreLabel =[SKLabelNode labelNodeWithFontNamed:@"CarterOne"];
     [scoreLabel setText:@"0"];
     [scoreLabel setFontSize:fontSize];
 //    [scoreLabel setPosition:CGPointMake(self.size.width/2, self.size.height/2)];
@@ -67,7 +88,7 @@
 }
 
 - (void)addCounterLabel{
-    SKLabelNode *timeTextLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    SKLabelNode *timeTextLabel = [SKLabelNode labelNodeWithFontNamed:@"CarterOne"];
     [timeTextLabel setText:@"Counter"];
     [timeTextLabel setFontSize:fontSize];
     [timeTextLabel setPosition:timeLabelPosition];
@@ -76,7 +97,7 @@
 }
 
 - (void)addCounter{
-    SKLabelNode *timeLabelNode = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    SKLabelNode *timeLabelNode = [SKLabelNode labelNodeWithFontNamed:@"CarterOne"];
     [timeLabelNode setText:@"0.0 seconds"];
     [timeLabelNode setFontSize:fontSize];
     [timeLabelNode setPosition:timePosition];
@@ -86,7 +107,7 @@
 
 
 - (void)addOtherScoreLabel{
-    SKLabelNode *otherScoreTextLabel = [SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    SKLabelNode *otherScoreTextLabel = [SKLabelNode labelNodeWithFontNamed:@"CarterOne"];
     [otherScoreTextLabel setText:@"Oppopent Score"];
     [otherScoreTextLabel setFontSize:fontSize];
     [otherScoreTextLabel setPosition:otherScoreLabelPosition];
@@ -96,7 +117,7 @@
     [self addChild:otherScoreTextLabel];
 }
 - (void)addOtherScore{
-    otherScoreLabelNode =[SKLabelNode labelNodeWithFontNamed:@"Chalkduster"];
+    otherScoreLabelNode =[SKLabelNode labelNodeWithFontNamed:@"CarterOne"];
     //[[UILabel alloc] initWithFrame:CGRectMake(self.frame.size.width *0.85, 0, self.frame.size.width *0.15,aFrame.size.height )];
     //    [scoreLabel setFont:[UIFont fontWithName:@"Helvetica" size:22.0f]];
     //    [scoreLabel setText:@"00000"];
@@ -110,14 +131,20 @@
 }
 
 - (void)addPauseButton{
-    SKSpriteNode *pauseButtonNode = [[SKSpriteNode alloc] initWithImageNamed:@"pause.png"];
+    SKSpriteNode *pauseButtonNode = [[SKSpriteNode alloc] initWithImageNamed:@"pauseButton.png"];
     [pauseButtonNode setName:@"pauseButtonNode"];
-    [pauseButtonNode setSize:CGSizeMake([PHProperties pauseButtonSize], [PHProperties pauseButtonSize])];
+    [pauseButtonNode setSize:CGSizeMake(self.size.width *  kPauseButtonSizeRatio , self.size.width  * kPauseButtonSizeRatio )];
     //loong ui codes offf
-    [pauseButtonNode setPosition:CGPointMake(self.size.width*0.5 - pauseButtonNode.size.width,-self.size.height * 0.5 + pauseButtonNode.size.height )];
+    [pauseButtonNode setPosition:CGPointMake(self.size.width*0.5 - self.size.width*0.04 - pauseButtonNode.size.width,-self.size.height * 0.5 +self.size.height * 0.1 + pauseButtonNode.size.height )];
     
     [self addChild:pauseButtonNode];
     
     
+}
+- (void)addPanel{
+    SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"panel.png"];
+    [bgNode setSize: self.size];
+    [bgNode setPosition:CGPointMake(0, 0)];
+    [self addChild:bgNode];
 }
 @end

@@ -7,6 +7,7 @@
 //
 
 #import <SpriteKit/SpriteKit.h>
+
 @interface ScoreBoardNode : SKSpriteNode{
     SKLabelNode *scoreLabel;
     SKLabelNode *otherScoreLabelNode;
@@ -25,4 +26,6 @@
 @property (nonatomic,retain) SKLabelNode *scoreLabel;
 @property (nonatomic,retain) SKLabelNode *otherScoreLabelNode;
 @property (nonatomic,retain) SKScene *masterScene;
+@property (nonatomic,assign) GameType gameType;
+- (id)initWithColor:(UIColor *)color size:(CGSize)size andGameType:(GameType)gameType;
 @end

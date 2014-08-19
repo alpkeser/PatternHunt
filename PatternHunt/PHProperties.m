@@ -68,7 +68,7 @@ NSString const * isMuteKey = @"ISMUTE";
             break;
         case 3:
 //            morrrr
-            return @"purpleTile.png";
+            return @"orangeTile.png";
         case 4:
             //siyah
             return @"blackTile.png";
@@ -120,6 +120,7 @@ NSString const * isMuteKey = @"ISMUTE";
         return 14.0f;
     }
 }
+
 + (float)sizeForTraceStroke{
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         return 10.0f;
@@ -127,11 +128,15 @@ NSString const * isMuteKey = @"ISMUTE";
         return 5.0f;
     }
 }
-+ (float)pauseButtonSize{
+
+
+
+
++ (float)fontSizeForPauseMenu{
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return 30.0f;
+        return 19.0f;
     }else{
-        return 20.0f;
+        return 12.0f;
     }
 }
 @end

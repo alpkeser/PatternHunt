@@ -7,7 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-
+typedef  enum{
+    SINGLE = 0,
+    MULTIPLAYER
+}GameType;
 @interface PHProperties : NSObject
 + (float)getTileFactoryXByOrder:(int)anOrder inFrame:(CGRect)aFrame;
 + (float)getTileSizeInFrame:(CGRect)aFrame;
@@ -17,6 +20,6 @@
 + (NSString*)getImageNameWithNumber:(int)aColorNumber;
 + (float)fontSizeForScoreBoard;
 + (float)fontSizeForGameScene;
++ (float)fontSizeForPauseMenu;
 + (float)sizeForTraceStroke;
-+ (float)pauseButtonSize;
 @end

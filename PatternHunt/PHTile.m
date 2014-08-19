@@ -7,7 +7,7 @@
 //
 
 #import "PHTile.h"
-
+#import "LevelManager.h"
 @implementation PHTile
 @synthesize isSelected,myFactory,tileType,orginalColorCode;
 #pragma mark - init methods
@@ -39,4 +39,17 @@
     
     return self;
 }
+
+//- (void)changeColor{
+//    if (isSelected) {
+//        [self performSelector:@selector(changeColor) withObject:nil afterDelay:1];
+//    }
+//    int newColorCode = orginalColorCode;
+//    while (newColorCode == orginalColorCode) {
+//        newColorCode = arc4random() % 3;
+//    }
+//    [self setTexture:[SKTexture textureWithImage:[PHProperties getImageWithNumber:newColorCode]]];
+//    orginalColorCode = newColorCode;
+//    [self performSelector:@selector(changeColor) withObject:nil afterDelay:1];
+//}
 @end

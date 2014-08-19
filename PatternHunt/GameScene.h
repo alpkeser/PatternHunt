@@ -9,10 +9,6 @@
 #import <SpriteKit/SpriteKit.h>
 #import "ScoreBoardNode.h"
 #import "GCHelper.h"
-typedef  enum{
-    SINGLE = 0,
-    MULTIPLAYER
-}GameType;
 @interface GameScene : SKScene<GCHelperDelegate>{
     
     NSMutableArray *selectedTiles;
@@ -30,10 +26,11 @@ typedef  enum{
 @property (strong,nonatomic)NSMutableArray *factories;
 @property (strong,nonatomic)SKShapeNode *fingerTrace;
 @property (strong,nonatomic)NSMutableArray *traces;
+@property (strong,nonatomic)GameScene *nextGameScene;
 @property (assign,nonatomic)GameType gameType;
 @property (assign,nonatomic)BOOL isFinished;
 @property (assign,nonatomic)BOOL isPaused;
 - (NSMutableArray*)setupFactoriesWithFrame:(CGRect)aFrame;
-- (void)setFactoriesFromColorCodes:(int[10][300])colorCodes andWithFrame:(CGRect)aFrame;
+- (void)setFactoriesFromColorCodes:(int[10][900])colorCodes andWithFrame:(CGRect)aFrame;
 - (void)endGame;
 @end
