@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>questId</key>
+		<integer>0</integer>
+		<key>questDescription</key>
+		<string>Hunt your first pattern!</string>
+		<key>questType</key>
+		<string>PATTERN</string>
+		<key>questCountLimit</key>
+		<integer>1</integer>
+		<key>questLimit</key>
+		<integer>3</integer>
+	</dict>
+    <dict>
+		<key>questId</key>
+		<integer>1</integer>
+		<key>questDescription</key>
+		<string>Get 1000 points in a round!</string>
+		<key>questType</key>
+		<string>POINT</string>
+		<key>questCountLimit</key>
+		<integer>1</integer>
+		<key>questLimit</key>
+		<integer>1000</integer>
+	</dict>
+</array>
+</plist>

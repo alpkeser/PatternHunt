@@ -49,6 +49,7 @@ UIViewController const *parentVC;
     [self addChild:[self duelNode]];
     [self addChild:[self leaderboardNode]];
     [self addChild:[self muteNode]];
+    [self addChild:[self questNode]];
     [self addLogo];
 //    for (int sayac = 0; sayac<200; sayac++) {
 //        [self testShapeNode];
@@ -106,6 +107,18 @@ UIViewController const *parentVC;
     
 }
 
+- (SKSpriteNode*)questNode{
+    SKSpriteNode *questNode = [[SKSpriteNode alloc] initWithImageNamed:@"quest.png"];
+    [questNode setSize:CGSizeMake(self.frame.size.width * 0.10, self.frame.size.width * 0.10)];
+    if (self.bannerView.alpha >0) {
+        [questNode setPosition:CGPointMake(self.frame.size.width * 0.1, self.frame.size.height *  0.05 + +  self.bannerView.frame.size.height)];
+    }else{
+        [questNode setPosition:CGPointMake(self.frame.size.width * 0.1, self.frame.size.height *  0.05)];
+    }
+    [questNode setName:@"questNode"];
+    return questNode;
+}
+
 - (void)addLogo{
     //ratio is 4.232
     SKSpriteNode *logoNode= [[SKSpriteNode alloc] initWithImageNamed:@"headerLogo.png"];
@@ -120,7 +133,10 @@ UIViewController const *parentVC;
     SKNode *helloNode = [self nodeAtPoint:[(UITouch*)[touches anyObject] locationInNode:self]] ;
     if(helloNode == nil)
         return;
-    
+    if ([[helloNode name] isEqualToString:@"muteNode"]) {
+        [self mutePressed];
+        return;
+    }
     if ([[helloNode name] isEqualToString:@"singleNode"]) {
         _gameScene = [[GameScene alloc] initWithSize:self.size];
         [_gameScene setGameType:SINGLE];
@@ -161,6 +177,9 @@ UIViewController const *parentVC;
     [helper showLeaderboardWithViewController:self.parentVC];
 }
 
+- (void)mutePressed{
+    [(AppDelegate*)[[UIApplication sharedApplication] delegate] muteMusic];
+}
 - (void)showGameModePanel{
     SKSpriteNode *panel = [[SKSpriteNode alloc] initWithColor:[UIColor redColor] size:CGSizeMake(200, 200)];
     [panel setPosition:CGPointMake(CGRectGetMidX(self.view.frame), CGRectGetMidY(self.view.frame))];

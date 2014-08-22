@@ -11,6 +11,8 @@
 #import "MenuScene.h"
 #import "AppDelegate.h"
 #import "GCHelper.h"
+#import <CoreData/CoreData.h>
+#import "DataManager.h"
 @interface ViewController ()
 
 @end
@@ -25,8 +27,11 @@
     [spriteView setShowsDrawCount:YES];
     [spriteView setShowsNodeCount:YES];
     [spriteView setShowsFPS:YES];
+        [[DataManager new] deleteDB];
+    [[DataManager new] loadDummyData];
     
 }
+
 
 
 - (void)viewWillAppear:(BOOL)animated{

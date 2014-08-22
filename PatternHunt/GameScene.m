@@ -24,6 +24,7 @@
 #pragma mark - SKScene event methods
 - (void)didMoveToView:(SKView *)view
 {
+    [[self view] setMultipleTouchEnabled:NO];
     [self setIsFinished:NO];
     [self setIsPaused:NO];
     [LevelManager initLevels];
@@ -38,7 +39,7 @@
 //    });
 //    
 
-    secondsLeft = 15.0;
+    secondsLeft = 33.0; //3 sec for begining
 //    [self setBackgroundColor:[UIColor colorWithRed:247.0f/255.0f green:175.0f/255.0f blue:29.0f/2555.0f alpha:1]];
 //    [self setBackgroundColor:[UIColor blackColor]];
     SKSpriteNode *bgNode = [[SKSpriteNode alloc] initWithImageNamed:@"background.png"];
@@ -497,12 +498,12 @@
     if (aTile == nil) {
         return;
     }
-    //[aTile setColor:[UIColor whiteColor]];
-    //aalpk
     [aTile setTexture:[SKTexture textureWithImageNamed:@"blackTile.png"]];
-//    aTile runAction:
-//    [aTile runAction:[SKAction repeatActionForever:[SKAction sequence:@[[SKAction moveBy:CGVectorMake(+1, 0) duration:0.3]]]]];
-//    [aTile setFillColor:[UIColor blackColor]];
+    //shake action
+    SKAction *rightRotate = [SKAction rotateByAngle:10.0f duration:0.1];
+    SKAction *leftRotate = [SKAction rotateByAngle:-10.0f duration:0.1];
+    SKAction *shake = [SKAction sequence:@[rightRotate,leftRotate,leftRotate,rightRotate]];
+    [aTile runAction:[SKAction repeatActionForever:shake]];
     [aTile setIsSelected:YES];
     //trace color check
 
@@ -585,6 +586,8 @@
 - (void)restartPattern{
     for(PHTile *tempTile in selectedTiles){
         [tempTile setIsSelected:NO];
+        [tempTile removeAllActions];
+        [tempTile runAction:[SKAction rotateToAngle:0 duration:0]];
 //        [tempTile setColor:tempTile.orginalColorCode];
        [tempTile setTexture:[SKTexture textureWithImageNamed:[PHProperties getImageNameWithNumber:tempTile.orginalColorCode]]];
     }
@@ -679,6 +682,15 @@
     SKAction *seq = [SKAction sequence:@[moveup,zoom,pause]];
     
     [helloNode runAction:seq completion:^{
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^(void){
+            while (self.traces.count !=0) {
+                
+            }
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                //            [self showBestPatternWithWinnerTrace:winnerTrace];
+                [self showGameOverPanel];
+            });
+        });
         [self riseAndFallAnimationWithWinnerTrace:[self findWinnerTrace]];
     }];
 }
@@ -699,16 +711,8 @@
 }
 
 - (void)riseAndFallAnimationWithWinnerTrace:(SKShapeNode*)winnerTrace{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0),^(void){
-        while (self.traces.count !=0) {
-            
-        }
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-//            [self showBestPatternWithWinnerTrace:winnerTrace];
-            [self showGameOverPanel];
-        });
-    });
-    float timeUnit = 3.0f  / self.traces.count;
+    
+    float timeUnit = 2.0f  / self.traces.count;
     SKAction *shine = [SKAction fadeAlphaTo:0.5f duration:0.3 * timeUnit];
     SKAction *shineMore = [SKAction sequence:@[[SKAction fadeAlphaTo:1.0f duration:1 ]]];
     SKAction *fall = [SKAction fadeAlphaTo:0.1f duration:0.2 * timeUnit ];
